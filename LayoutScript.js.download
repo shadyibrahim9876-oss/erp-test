@@ -1,0 +1,136 @@
+﻿$(document).ready(function () {
+    var navoffeset = $(".header-main").offset().top;
+    $(window).scroll(function () {
+        var scrollpos = $(window).scrollTop();
+        //if (scrollpos >= navoffeset) {
+        //    $(".header-main").addClass("fixed");
+        //} else {
+        $(".header-main").removeClass("fixed");
+        //}
+        // swal("Good job!", "You clicked the button!", "success");
+
+        //GetUserPhoto();
+    });
+
+});
+
+//2 لما تكون عايز تحمل صورة جديدة
+function UploadUserPhoto() {
+
+    if (window.FormData !== undefined) {
+        debugger;
+
+        //---------------------------------------------------------
+
+        var files1 = $("#upFile").get(0).files;
+
+        // Create FormData object
+        var fData1 = new FormData();
+        if (files1.length > 0) {
+            fData1.append(files1[0].name, files1[0]);
+        }
+
+        for (var pair of fData1.entries()) {
+            console.log(pair[0] + ', ' + pair[1]);
+        }
+        //-------------------------------------------------------------
+
+        $.ajax({
+            url: '/Home/UploadUserPhoto',
+            type: "POST",
+            contentType: false, // Not to set any content header
+            processData: false, // Not to process data
+            data: fData1,
+            success: function (result) {
+                // FadePageCover(true);
+                console.log(result);
+
+                //  GetMovesFromFile_BindTableRows(result);
+                // swal("Done", "File Uploaded Successfully!", "sucess");
+                swal("Good job!", "You clicked the button!", "success")
+                GetUserPhoto();
+
+            },
+            error: function (err) {
+                alert(err.statusText);
+            }
+        });
+    }
+
+}
+
+//1  اول ما تفتح الشاشة تحمل صورة جديدة
+function GetUserPhoto() {
+
+    //$.ajax({
+    //    url: '/Home/GetUserPhotoPath',
+    //    type: "POST",
+    //    data: {},
+    //    success: function (result) {
+    //       // console.log(result);
+
+    //        if (result == "error") {
+
+    //        }
+    //        else {
+
+    //            $('#User_Photo').attr("src", result);
+    //        }
+    //    },
+    //    error: function (err) {
+    //        alert(err.statusText);
+    //    }
+    //});
+
+}
+
+
+
+function ClearAll(containerName) {
+    $('input[type="text"].validation-error').removeClass("validation-error");
+    $('select.validation-error').removeClass("validation-error");
+
+    // Reset Textbox Array list
+    var _ListofControls = $(containerName.toString() + ' input[type="text"]');
+    if (_ListofControls != null && _ListofControls != undefined) {
+        $.each(_ListofControls, function (i, item) {
+            $(item).val("");
+        });
+    }
+    // Reset Textbox Array list
+    var _ListofControls = $(containerName.toString() + ' textarea');
+    if (_ListofControls != null && _ListofControls != undefined) {
+        $.each(_ListofControls, function (i, item) {
+            $(item).val("");
+        });
+    }
+    // Reset Hidden Array list
+    _ListofControls = $(containerName.toString() + ' input[type="hidden"]');
+    if (_ListofControls != null && _ListofControls != undefined) {
+        $.each(_ListofControls, function (i, item) {
+            $(item).val("");
+        });
+    }
+    // Reset Selection Options Array list
+    _ListofControls = $(containerName.toString() + ' select');
+    if (_ListofControls != null && _ListofControls != undefined) {
+        $.each(_ListofControls, function (i, item) {
+            item.selectedIndex = 0;
+        });
+    }
+    // Reset Checkbox Array list
+    _ListofControls = $(containerName.toString() + ' input[type="checkbox"]');
+    if (_ListofControls != null && _ListofControls != undefined) {
+        $.each(_ListofControls, function (i, item) {
+            $(item).prop('checked', false);
+        });
+    }
+
+    $(".alert-danger").slideUp();
+
+}
+
+
+
+
+

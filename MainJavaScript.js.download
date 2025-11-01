@@ -1,0 +1,2748 @@
+﻿
+var Initialize_CompanyCurrency = 1;
+var Initialize_CompanyExchangeRate = 1;
+var Language_Ar_En = 2;
+var WorkOrders_StartDynamicDesign = 1;
+var GeneralTruckingOrders_StartDynamicDesign = 1;
+var PermissionToMaterialReceipt_StartDynamicDesign = 1;
+var PermissionToMaterialIssue_StartDynamicDesign = 1;
+var PackagesGateIn_StartDynamicDesign = 0;
+
+var Initialize_IsAgriculture = 0;
+var Initialize_IsTruckingSystem = 0;
+var Initialize_IsForwardingSystem = 1;
+var Initialize_IsClearanceSystem = 0;
+var Initialize_IsConstructionSystem = 0;
+var Initialize_IsStorageSystem = 0;
+var Initialize_IsYardSystem = 0;
+//Table SystemOptions
+SystemOption_SalesInvoice_To_PermissionToMaterialIssue = 0;
+SystemOption_PurchasingInvoice_To_PermissionToMaterialReceipt = 0;
+SystemOption_PullPurchasingInvoiceToPriceList = 0;
+SystemOption_MultiCurrency = 1;
+SystemOption_LinkUserSafe = 0;
+SystemOption_LinkParticipantInSalesInvoicesPayment = 0;
+
+//Table TransactionTypes
+var Fixed_PermissionToMaterialIssue = 1;
+var Fixed_PermissionToMaterialReceipt = 2;
+var Fixed_TransferFromStoreToAnother = 3;
+var Fixed_Stale_Fixed = 4;
+var Fixed_ClientReturnInvoice = 5;
+var Fixed_SupplierReturnInvoice = 6;
+var Fixed_StockOpeningBalance = 7;
+var Fixed_PermissionToMaterialIssue_From_SalesInvoice = 30;
+var Fixed_PermissionToMaterialReceipt_From_PurchasingInvoice = 40;
+var Fixed_PermissionToMaterialIssue_From_SupplierReturnInvoice = 50;
+var Fixed_PermissionToMaterialReceipt_From_ClientReturnInvoice = 60;
+var Fixed_PermissionToMaterialReceipt_From_CheckOrder = 70;
+var Fixed_PermissionToMaterialReceipt_From_PermissionToMaterialIssue = 80;
+
+function GenerateBarCode() {
+    //FadePageCover(true)
+    debugger
+    setTimeout(function () {
+
+        $("#BarCodeImg").barcode(
+            $("#U_StaffNo").val(), // Value barcode (dependent on the type of barcode)
+            $("#D_BarCodeType").val() // type (string)
+        );
+      
+    }, 300);
+}
+
+
+var _TodayDate = GetTodayDate(2);
+var ActiveLanguage = 0; //  1-->English    __    2-->Arabic
+
+$(window).on("load", function () {
+    debugger;
+    // All images are loaded now.
+    // Include code here that depends on images being loaded.
+
+    // Start the function
+    keepSessionAlive();
+
+    //equalTiles();
+   // $('div#loader').hide();
+    //$('div#main-container').fadeIn(1200);
+   // $('.blank').fadeIn(1200);
+    $.busyLoadFull("hide");
+    //$(window).on("resize orientationchange", function () {
+    //   // equalTiles();
+    //});
+});
+$(window).on("unload", function () {
+    debugger;
+    // All images are loaded now.
+    // Include code here that depends on images being loaded.
+
+    //equalTiles();
+    // $('div#loader').hide();
+
+    //$('.blank').fadeIn(1200);
+    $.busyLoadFull("show");
+
+    //$(window).on("resize orientationchange", function () {
+    //   // equalTiles();
+    //});
+});
+
+
+
+
+function ChangeBranch(THIS) {
+
+    var BranchID = $(THIS).val();
+    if (BranchID) {
+        window.location = "/Home/ChangeCurrentBranch/" + BranchID+"";
+    }
+    return false;
+}
+
+
+var Project_Header_Right = "";
+var Project_Header_Left = "";
+
+
+$(document).ready(function () {
+    debugger;
+    _TodayDate = $('#HeaderDate').text(); // GetTodayDate(2);
+    //$.busyLoadFull("show");
+    //GenerateBarCode();
+
+
+
+    //$('.modal').modal({
+    //    backdrop: 'static',
+    //    keyboard: false
+    //});
+
+    //var elementWidth = $('.sidebar-menu').width();
+    //var parentWidth = $('.sidebar-menu').parent().width();
+    //var widthPercentage = (elementWidth / parentWidth) * 100;
+    
+    //$(".sidebar-menu").css("width", (widthPercentage) + "%");
+    //$(".left-content").css("width", (100 - widthPercentage) + "%");
+
+
+
+    //$.ajax({
+    //    type: 'GET',
+    //    url: '/General/InitializeSystem',
+    //    data: {  },
+    //    dataType: 'json',
+    //    success: function (result) {
+    //        debugger;
+    //        //InitializeSystem
+    //        Initialize_CompanyCurrency = result.InitializeSystem[0].CompanyCurrency;
+
+    //        //SystemOption
+            
+    //        SystemOptions = result.SystemOptions;
+
+    //        for (let item of result.SystemOptions) {
+    //            debugger;
+    //            if (item.Name == "SalesInvoice_To_PermissionToMaterialIssue" && item.IsActive != null)
+    //                SystemOption_SalesInvoice_To_PermissionToMaterialIssue = item.IsActive;
+    //            else if (item.Name == "PurchasingInvoice_To_PermissionToMaterialReceipt" && item.IsActive != null)
+    //                SystemOption_PurchasingInvoice_To_PermissionToMaterialReceipt = item.IsActive;
+    //            else if (item.Name == "PullPurchasingInvoiceToPriceList" && item.IsActive != null)
+    //                SystemOption_PullPurchasingInvoiceToPriceList = item.IsActive;
+    //            else if (item.Name == "MultiCurrency" && item.IsActive != null)
+    //                SystemOption_MultiCurrency = item.IsActive;
+    //            else if (item.Name == "LinkUserSafe" && item.IsActive != null)
+    //                SystemOption_LinkUserSafe = item.IsActive;
+    //            else if (item.Name == "LinkParticipantInSalesInvoicesPayment" && item.IsActive != null)
+    //                SystemOption_LinkParticipantInSalesInvoicesPayment = item.IsActive;
+    //        }
+
+    //    }
+
+    //});
+
+
+
+
+
+
+
+    //$('#TodaysDate').html('©' + GetTodayDate(2) + ' Deep-Egy-Solutions')
+    if ($('#Syslang').attr('val') == 1)//English Is Active
+    {
+        ////debugger;
+        $("#menu li ul").css("left", "100%");
+        //$('.NavbarAngleEnglish').addClass('hide');
+        //$('.NavbarAngleArabic').addClass('hide');
+        ActiveLanguage = 1;
+
+        //$('.profile_details li a i.fa.lnr').css("right", "45%"); The Old from Kelany
+        $('.profile_details li a i.fa.lnr').css("right", "25%"); 
+
+        $("#UserName").addClass('m-r-md');
+        $('.profile_details_drop').css("float", "right");
+
+    }
+    else
+    {
+        ActiveLanguage = 2;
+       // $('head').append($('<link rel="stylesheet" type="text/css" />').attr('href', '/Content/app.v2.ar.kela.css'));
+        //$('#menu li ul').css("left", "");
+        //$(".ChangeColor").css("float", "right");
+        $('.swapChildrenClass').reverseChildren();
+        $(".MainHtml").attr('dir', 'rtl');
+        $(".MainHtml").attr('lang', 'ar');
+        $(".sidebar-menu").css("left", "");
+        $('.left-content').css('float', 'left');
+        //$('.NavbarAngleArabic').removeClass('hide');
+        $('.NavbarAngleEnglish').addClass('hide');
+        $('.NavbarAngleArabic').addClass('hide');
+        $("#UserName").addClass('m-r-md');
+        $("#menu li a").css("display", "inline-block");
+        $("#menu li ul").css("right", "100%");
+
+        //$(".header-right").css("float", "left");
+        //$(".header-left").css("float", "right");
+        $('.mostaa-logo').addClass('m-r-md');
+        //$('.profile_details_left').css("float", "right");
+        $('.profile_details').css("float", "left");
+        $('.dropdown-menu>li>a').addClass("text-right");
+        $('.CopyRightCompany').val("©Deep-Egy-Solutionsaa");
+        $(".mostaa-btn-add").css("float", "right");
+        $(".mostaa-btn-delete").css("float", "left");
+        $(".CboNumberOfPages").css("float", "left");
+        $("input[type='submit']").css("float", "left")
+
+        //$('ul > li').css('float', 'right');
+        $('.liInUL li').css('float', 'right');
+        $('.dropdown-toggle').addClass('m-l-md');
+        $('.profile_details li a i.fa.lnr').css("right", "86%");
+
+    }
+    Project_Header_Right = $("#ProjectHeaderRight").html();
+    Project_Header_Left = $("#ProjectHeaderLeft").html();
+    
+});
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@ Date @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+var CurrentViewName = '';
+function LoadView(ViewName)
+{
+    debugger;
+    CurrentViewName = ViewName;
+    try
+    {
+        $.ajax({
+            url: '/Views/' + ViewName + '',
+            dataType: 'html',
+            success: function (data)
+            {
+                debugger;
+                //$('.blankpage-main').html(data);
+                $('#ViewBodyID').html(data);
+                if ($('#Syslang').attr('val') == 1)//English Is Active
+                {
+                    ////debugger;
+                    $("#menu li ul").css("left", "100%");
+                    //$('.NavbarAngleEnglish').addClass('hide');
+                    //$('.NavbarAngleArabic').addClass('hide');
+                    ActiveLanguage = 1;
+                    $('.profile_details li a i.fa.lnr').css("right", "45%");
+                    $("#UserName").addClass('m-r-md');
+                    $('.profile_details_drop').css("float", "right");
+
+                    $("#ProjectHeaderLeft").html(Project_Header_Left);
+                }
+                else {
+                    ActiveLanguage = 2;
+                    // $('head').append($('<link rel="stylesheet" type="text/css" />').attr('href', '/Content/app.v2.ar.kela.css'));
+                    //$('#menu li ul').css("left", "");
+                    //$(".ChangeColor").css("float", "right");
+                    $('.swapChildrenClass').reverseChildren();
+                    $(".MainHtml").attr('dir', 'rtl');
+                    $(".MainHtml").attr('lang', 'ar');
+                    $(".sidebar-menu").css("left", "");
+                    $('.left-content').css('float', 'left');
+                    //$('.NavbarAngleArabic').removeClass('hide');
+                    $('.NavbarAngleEnglish').addClass('hide');
+                    $('.NavbarAngleArabic').addClass('hide');
+                    $("#UserName").addClass('m-r-md');
+                    $("#menu li a").css("display", "inline-block");
+                    $("#menu li ul").css("right", "100%");
+
+                    //$(".header-right").css("float", "left");
+                    //$(".header-left").css("float", "right");
+                    $('.mostaa-logo').addClass('m-r-md');
+                    //$('.profile_details_left').css("float", "right");
+                    $('.profile_details').css("float", "left");
+                    $('.dropdown-menu>li>a').addClass("text-right");
+                    $('.CopyRightCompany').val("©Deep-Egy-Solutionsaa");
+                    $(".mostaa-btn-add").css("float", "right");
+                    $(".mostaa-btn-delete").css("float", "left");
+                    $(".CboNumberOfPages").css("float", "left");
+                    $("input[type='submit']").css("float", "left")
+
+                    //$('ul > li').css('float', 'right');
+                    $('.liInUL li').css('float', 'right');
+                    $('.dropdown-toggle').addClass('m-l-md');
+
+                    $("#ProjectHeaderRight").html(Project_Header_Right);
+                }
+
+                try
+                {
+                    if (ViewName == "F_Files") { }
+                    else if (ViewName == "P_PurchasingInvoice")
+                        InitializePage(true);
+                    else {}
+                }
+                catch (err)
+                {
+                    //document.getElementById("demo").innerHTML = err.message;
+                }
+                
+            }
+        });
+        $("#SystemPages_ModalID").modal("hide")
+    }
+    catch (e) {
+        // handle the exception or ignore
+    }
+   
+}
+
+function AfterLoadView(HTMLviewName)
+{
+    if ($('#Syslang').attr('val') == 1)//English Is Active
+    {
+        $("#menu li ul").css("left", "100%");
+        $('.profile_details li a i.fa.lnr').css("right", "25%");
+        $('.profile_details_drop').css("float", "right");
+    }
+    else
+    {
+        $('.liInUL li').css('float', 'right');
+        if (HTMLviewName == "SharedHTML")
+        {
+            $("#SHORT_Customer_ModalID").find('.swapChildrenClass').reverseChildren();
+        }
+    }
+}
+function GetDateWithFormateMDY(pSenderDate) {
+    var dtFormatedMDY = new Date(1 * pSenderDate.substring(6, pSenderDate.length - 2));
+    return dtFormatedMDY.toLocaleDateString();
+}
+// GLOBAL FUNCTIONS -------------------------------------------------------------
+
+function GetDateWithFormateDMY(pSenderDate) {
+    var dtFormatedMDY = new Date(1 * pSenderDate.substring(6, pSenderDate.length - 2));
+    var currentDate = dtFormatedMDY.toISOString().split('T')[0];
+    currentDate = currentDate.split('-');
+    return (currentDate[2] + '-' + currentDate[1] + '-' + currentDate[0]);
+}
+
+function GetDateWithFormateYMDdashedDateOnly(pDateToConvert) {
+
+    if (pDateToConvert != "") {
+        try {
+            pDateToConvert = pDateToConvert.split(' ')[0];
+            var YMD = pDateToConvert.split('/')[2] + "-"
+                + (pDateToConvert.split('/')[1].length == 1 ? "0" + pDateToConvert.split('/')[1] : pDateToConvert.split('/')[1]) + "-"
+                + (pDateToConvert.split('/')[0].length == 1 ? "0" + pDateToConvert.split('/')[0] : pDateToConvert.split('/')[0]);
+            return YMD;
+
+        }
+        catch
+        {
+            return "01/01/1900";
+        }
+    }
+    else
+        return "1";
+
+}
+function GetDateWithFormateYMDdashedDateAndTime(pDateTimeToConvert) {
+    if (pDateTimeToConvert != "") {
+        try {
+            // Split date and time parts
+            var parts = pDateTimeToConvert.split(' ');
+            var datePart = parts[0];
+            var timePart = parts.length > 1 ? parts[1] + (parts.length > 2 ? " " + parts[2] : "") : "";
+
+            // Process date part (DD/MM/YYYY)
+            var dateComponents = datePart.split('/');
+            var year = dateComponents[2];
+            var month = dateComponents[1].length == 1 ? "0" + dateComponents[1] : dateComponents[1];
+            var day = dateComponents[0].length == 1 ? "0" + dateComponents[0] : dateComponents[0];
+
+            var formattedDate = year + "-" + month + "-" + day;
+
+            // If time part exists, process it
+            if (timePart) {
+                // Process time part (h:mm AM/PM)
+                var timeComponents = timePart.split(':');
+                var hours = parseInt(timeComponents[0]);
+                var minutes = timeComponents[1].split(' ')[0];
+                minutes = minutes.length == 1 ? "0" + minutes : minutes;
+
+                // Handle AM/PM
+                var period = timePart.toUpperCase().indexOf("PM") >= 0 ? "PM" : "AM";
+                if (period === "PM" && hours < 12) {
+                    hours += 12;
+                } else if (period === "AM" && hours === 12) {
+                    hours = 0;
+                }
+
+                // Format hours to two digits
+                hours = hours.toString().length == 1 ? "0" + hours : hours;
+
+                formattedDate += " " + hours + ":" + minutes;
+            }
+
+            return formattedDate;
+        }
+        catch (e) {
+            console.error("Error formatting date/time:", e);
+            return "1900-01-01 00:00"; // Return default date/time on error
+        }
+    }
+    else {
+        return ""; // Return empty string for empty input
+    }
+}
+function GetDateTimeWithFormateYMDdashedDateOnly(pDateToConvert) {
+    var BaseDatetime = pDateToConvert;
+    if (pDateToConvert != "") {
+        try {
+            pDateToConvert = pDateToConvert.split(' ')[0];
+            var YMD = pDateToConvert.split('/')[2] + "-"
+                + (pDateToConvert.split('/')[1].length == 1 ? "0" + pDateToConvert.split('/')[1] : pDateToConvert.split('/')[1]) + "-"
+                + (pDateToConvert.split('/')[0].length == 1 ? "0" + pDateToConvert.split('/')[0] : pDateToConvert.split('/')[0]);
+            return (YMD + ' ' + BaseDatetime.split(' ')[1] + ' ' + BaseDatetime.split(' ')[2]);
+
+        }
+        catch
+        {
+            return "01/01/1900";
+        }
+    }
+    else
+        return "1";
+
+}
+
+Date.prototype.subtractDates = function (pFirstDate, pSecondDate) {
+    var _firstDate = new Date(pFirstDate);
+    var _secondDate = new Date(pSecondDate);
+    var _timeDiff = Math.abs(_secondDate.getTime() - _firstDate.getTime());
+    //var _diffDays = Math.ceil(_timeDiff / (1000 * 3600 * 24));
+    var _diffDays = Math.round(_timeDiff / (1000 * 3600 * 24));
+    return _diffDays;
+}
+
+
+function GetNumberOfDaysBetween2Dates(pFirstDate, pSecondDate)
+{
+    var _firstDate = new Date(pFirstDate);
+    var _secondDate = new Date(pSecondDate);
+    var _timeDiff = Math.abs(_secondDate.getTime() - _firstDate.getTime());
+    //var _diffDays = Math.ceil(_timeDiff / (1000 * 3600 * 24));
+    var _diffDays = Math.round(_timeDiff / (1000 * 3600 * 24));
+    //_diffDays = _diffDays + 1;
+    return _diffDays;
+}
+function GetNumberOfMonthsBetween2Dates(pFirstDate, pSecondDate) {
+    var months;
+    var d1 = new Date(pFirstDate);
+    var d2 = new Date(pSecondDate);
+    months = (d2.getFullYear() - d1.getFullYear()) * 12;
+    months -= d1.getMonth();
+    months += d2.getMonth();
+    if ( parseInt(pSecondDate.split('/')[1]) >= parseInt(pFirstDate.split('/')[1]) )
+        return months <= 0 ? 0 : (months + 1);
+    else
+        return months <= 0 ? 0 : months;
+}
+Date.prototype.addDays = function (pDays) {
+
+    var dat = new Date(this.valueOf());
+    alert(dat.toDateString());
+    dat.setDate(dat.getDate() + pDays);
+    return dat;
+}
+
+Date.prototype.addDays = function (pFirstDate, pDays) {
+
+    var _DateString = (pFirstDate.toString()).replace("-", "/");
+    var someDate = new Date(pFirstDate);
+    var numberOfDaysToAdd = pDays * 1;
+    var _toDate = moment(_DateString).add(numberOfDaysToAdd, 'days');
+
+    someDate = new Date(_toDate._d);
+    var dd = someDate.getDate();
+    var mm = someDate.getMonth() + 1;
+    var y = someDate.getFullYear();
+
+    if (dd.toString().length < 2)
+        dd = ("0" + dd);
+    if (mm.toString().length < 2)
+        mm = ("0" + mm);
+
+    //var someFormattedDate = dd + '/' + mm + '/' + y;
+
+    return (dd + '/' + mm + '/' + y);
+}
+
+function getDateFromArray(pDate) {
+    var foo = pDate;
+    var arr;
+    if (foo.indexOf("-") > -1)
+        arr = foo.split("-");
+    else if (foo.indexOf("/") > -1)
+        arr = foo.split("/");
+    return new Date(parseInt(arr[2]).toString() + "/" + parseInt(arr[1]).toString() + "/" + parseInt(arr[0]).toString());
+}
+
+function getMonthFromString(mon) {
+    return new Date(Date.parse(mon + " 1, 2012")).getMonth() + 1
+}
+
+function get24Houre(pTime) {
+    var time = pTime;
+    var hours = Number(time.match(/^(\d+)/)[1]);
+    var minutes = Number(time.match(/:(\d+)/)[1]);
+    var AMPM = time.match(/\s(.*)$/)[1];
+    if (AMPM == "PM" && hours < 12) hours = hours + 12;
+    if (AMPM == "AM" && hours == 12) hours = hours - 12;
+    var sHours = hours.toString();
+    var sMinutes = minutes.toString();
+    if (hours < 10) sHours = "0" + sHours;
+    if (minutes < 10) sMinutes = "0" + sMinutes;
+    console.log(sHours + ":" + sMinutes)
+    return (sHours + ":" + sMinutes);
+}
+
+function GetDateWithFormatMDY(pSenderDate) {
+    var dtFormatedMDY = new Date(1 * pSenderDate.substring(6, pSenderDate.length - 2));
+    return dtFormatedMDY.toLocaleDateString();
+}
+
+
+
+function GetTimeFromServer(pServerDate) {
+
+    var dtFormatedMDY = new Date(1 * pServerDate.substring(6, pServerDate.length - 2));
+    return dtFormatedMDY.toLocaleTimeString();
+}
+
+//moment(testDate).format('MM/DD/YYYY');
+//'DD/MM/YYYY LT'
+
+function GetDateWithoutTimeFromServer(pDateType, pServerDate) {
+   // var date = 0
+    if (pDateType == 1)
+    {
+        return moment(pServerDate).format('DD/MM/YYYY');
+    }
+    else if (pDateType == 2) {
+
+        return moment(pServerDate).format('DD/MM/YYYY');
+    }
+    else
+    {
+        return moment(pServerDate).format('LT');
+    }
+
+}
+function GetDateFromServer(pDateType, pServerDate) {
+    // var date = 0
+    if (pServerDate == null || pServerDate == "" || pServerDate == "0" || pServerDate == undefined)
+    {
+        return "";
+    }
+    else
+    {
+        if (pDateType == 1) {
+            return moment(pServerDate).format('DD/MM/YYYY LT');
+        }
+        else if (pDateType == 2) {
+
+            return moment(pServerDate).format('DD/MM/YYYY');
+        }
+        else {
+            return moment(pServerDate).format('LT');
+        }
+    }
+ 
+
+}
+
+
+function GetWeekDayFromDate(DDMMYYYDate) {
+   // return (new Date((moment(DDMMYYYDate).format('DD/MM/YYYY')))).getDay();
+    return (new Date((moment(DDMMYYYDate , "DD/MM/YYYY")))).getDay();
+
+}
+
+
+function GetDiffFromToday(DMY_Date) {
+    var todaydate = new Date();
+    console.log(todaydate);
+    var inputdate = moment(DMY_Date, 'DD/MM/YYYY').toDate();
+    var datediff = (new Date(inputdate - todaydate)) / 1000 / 60 / 60 / 24;
+    return (datediff + 1);
+}
+function monthDiffForDateRange(dd1, dd2) {
+    var d1 = moment(dd1, 'DD/MM/YYYY').toDate();
+    var d2 = moment(dd2, 'DD/MM/YYYY').toDate();
+    var months;
+    months = (d2.getFullYear() - d1.getFullYear()) * 12;
+    months -= d1.getMonth() + 1;
+    months += d2.getMonth();
+
+
+
+
+    var arr = [];
+
+
+
+    if (months <= 0) {
+        arr[0] = 1;
+        arr[1] = 1;
+    }
+    else if (months <= 4) {
+        arr[0] = 1;
+        arr[1] = months;
+    }
+    else {
+
+        arr[0] = Math.ceil(months / 4);
+        arr[1] = 4;
+
+    }
+
+
+    return arr;
+}
+
+
+
+
+
+function GetTodayDate(pDateType)
+{
+    var todaydate = new Date();
+    if (pDateType == 1) {
+        return moment(todaydate).format('DD/MM/YYYY LT');
+    }
+    else if (pDateType == 2) {
+
+        return moment(todaydate).format('DD/MM/YYYY');
+    }
+    else {
+        return moment(todaydate).format('LT');
+    }
+
+}
+
+function GetBirthdateFromAge(years, months , TodayDate) {
+    var AllMonths = ((years * 12) + months);
+    return moment(TodayDate, 'DD/MM/YYYY').subtract(AllMonths, 'months').format('DD/MM/YYYY');
+
+}
+
+function GetAgeFromBirthdate(DDMMYYYY_Date , TodayDate)
+{
+    return [Math.floor(moment(TodayDate, 'DD/MM/YYYY').diff(moment(DDMMYYYY_Date, 'DD/MM/YYYY'), 'years', true)), Math.floor(moment().diff(moment(DDMMYYYY_Date, 'DD/MM/YYYY'), 'months', true))%12 ] ;
+}
+
+function SetAgeGroupFromBirthDate(DDMMYYYY_Date , inputID , SlimSelectObject)
+{
+    //debugger;
+    $(inputID).find("option").each(function (i, option) {
+        var FromYear = parseFloat($(option).attr("FromYear")) * 12.00;
+        var ToYear = parseFloat($(option).attr("ToYear")) * 12.00;
+        var FromMonth = parseFloat($(option).attr("FromMonth"));
+        var ToMonth = parseFloat($(option).attr("ToMonth"));
+        var FromMonthes = FromYear + FromMonth ;
+        var ToMonthes = ToYear + ToMonth;
+
+
+        var AgeMonthes = (Math.floor(moment().diff(moment(DDMMYYYY_Date, 'DD/MM/YYYY'), 'years', true))) +( Math.floor(moment().diff(moment(DDMMYYYY_Date, 'DD/MM/YYYY'), 'months', true)) % 12 )
+
+        if (AgeMonthes >= FromMonthes && AgeMonthes <= ToMonthes)
+        {
+            SlimSelectObject.set($(option).attr("value"));
+            return false;
+        }
+
+
+    });
+
+
+}
+
+
+function SetAgeGroupFromAge(years, months, inputID, SlimSelectObject) {
+    //debugger;
+    var AgeMonthes = ((years * 12) + months);
+    $(inputID).find("option").each(function (i, option) {
+        var FromYear = parseFloat($(option).attr("FromYear")) * 12.00;
+        var ToYear = parseFloat($(option).attr("ToYear")) * 12.00;
+        var FromMonth = parseFloat($(option).attr("FromMonth"));
+        var ToMonth = parseFloat($(option).attr("ToMonth"));
+        var FromMonthes = FromYear + FromMonth;
+        var ToMonthes = ToYear + ToMonth;
+
+
+        if (AgeMonthes >= FromMonthes && AgeMonthes <= ToMonthes) {
+            SlimSelectObject.set($(option).attr("value"));
+            return false;
+        }
+
+
+    });
+
+}
+var ArrWeekEn = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+var ArrWeekAr = ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"];
+
+var StrWeekEn = "Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday";
+
+
+
+function GetWeekDayName(DDMMYYYY_Date)
+{
+    var dayno = moment(DDMMYYYY_Date, 'DD/MM/YYYY');
+    console.log(dayno);
+    var weekday = new Array();
+
+
+    if ($('#Syslang').attr('val') == "1")
+        weekday = ArrWeekEn;
+    else
+        weekday = ArrWeekAr;
+    
+
+
+    return weekday[dayno._d.getDay()];
+
+
+
+}
+
+//function GetDiffFromToday(DMY_Date)
+//{
+//    var todaydate = new Date();
+//    var inputdate = moment(DMY_Date, 'DD/MM/YYYY LT').toDate();
+
+//  return  todaydate.diff(inputdate , 'days');
+
+
+//}
+
+
+function FilltblInputs(Selector) {
+    //debugger;
+    $.each($(Selector), function (j, tr) {
+        //try {
+        //    var sl = $(tr).find('input[type=select]');
+        //    console.log("sl" + sl.length)
+        //    $.each($(tr).find('select'), function (i1, i_sl) {
+        //        $(i_sl).val($(i_sl).attr('val'));
+        //        $(i_sl).trigger("change");
+
+        //    });
+        //} catch (ex1) { }
+        //---------------------------------------------------------------------------------------------------------
+        try {
+            var nu = $(tr).find('input[type=number]');
+            console.log("nu" + nu.length)
+            $.each($(tr).find('input[type=number]'), function (i2, i_nu) {
+                $(i_nu).val($(i_nu).attr('val'));
+                $(i_nu).trigger("blur");
+            });
+        } catch (ex2) { }
+        //---------------------------------------------------------------------------------------------------------
+        try {
+            var txt = $(tr).find('input[type=text]');
+            console.log("txt" + txt.length)
+            $.each($(tr).find('input[type=text]'), function (i3, i_txt) {
+                $(i_txt).val($(i_txt).attr('val'));
+                $(i_txt).trigger("blur");
+
+                //if ($(i_txt).hasClass("datepicker-input")) {
+                //    try {
+                //        $(i_txt).datepicker().on('changeDate'
+                //            , function () {
+                //                $(this).datepicker('hide');
+                //                FireDateChangingEvent();
+
+                //            });
+                //        $(i_txt).datepicker().on('keydown', function (ev) { if (ev.keyCode == 9) $(this).datepicker('hide'); });
+
+                //    }
+                //    catch (ex) {
+
+
+                //    }
+                //}
+            });
+        } catch (ex3) { }
+        try {
+            var sl = $(tr).find('textarea');
+            console.log("sl" + sl.length)
+            $.each($(tr).find('textarea'), function (i1, i_sl) {
+                $(i_sl).val($(i_sl).attr('val'));
+                $(i_sl).trigger("change");
+
+            });
+        } catch (ex1) { }
+    });
+}
+
+
+var _OverlapArr = new Array();
+var _IsOverlap = "false"
+function isOverlap(tblID, FromClass, ToClass, callback) {
+    //debugger
+    _OverlapArr = [];
+
+
+    $(tblID).find("tbody tr").each(function (j, tr) {
+        // var obj = new Object();
+        //  obj.start = moment($(tr).find("td." + FromClass).find("input").val(), 'DD/MM/YYYY').unix();
+        // obj.end = moment($(tr).find("td." + ToClass).find("input").val(), 'DD/MM/YYYY').unix();
+        _OverlapArr.push(moment($(tr).find("td." + FromClass).find("input").val(), 'DD/MM/YYYY').unix());
+        _OverlapArr.push(moment($(tr).find("td." + ToClass).find("input").val(), 'DD/MM/YYYY').unix());
+
+        if ((moment($(tr).find("td." + FromClass).find("input").val(), 'DD/MM/YYYY').unix()) > (moment($(tr).find("td." + ToClass).find("input").val(), 'DD/MM/YYYY').unix())) {
+
+            if (typeof callback != "undefined" && callback != null) {
+                callback("true");
+                return false;
+            }
+            else
+                return "true"
+
+        }
+
+
+
+        if (j == $(tblID).find("tbody tr").length - 1) {
+            if (multipleDateRangeOverlaps(_OverlapArr) == "false") {
+                if (typeof callback != "undefined" && callback != null)
+                    callback("false")
+                else
+                    return "false"
+            }
+            else {
+                if (typeof callback != "undefined" && callback != null)
+                    callback("true")
+                else
+                    return "true"
+
+            }
+
+
+        }
+    });
+
+
+}
+function dateRangeOverlaps(a_start, a_end, b_start, b_end) {
+    if (a_start <= b_start && b_start <= a_end) return true; // b starts in a
+    if (a_start <= b_end && b_end <= a_end) return true; // b ends in a
+    if (b_start < a_start && a_end < b_end) return true; // a in b
+    return false;
+}
+function multipleDateRangeOverlaps(arguments) {
+    var i, j;
+    if (arguments.length % 2 !== 0)
+        throw new TypeError('Arguments length must be a multiple of 2');
+    for (i = 0; i < arguments.length - 2; i += 2) {
+        for (j = i + 2; j < arguments.length; j += 2) {
+            if (
+                dateRangeOverlaps(
+                    arguments[i], arguments[i + 1],
+                    arguments[j], arguments[j + 1]
+                )
+            ) {
+                console.log("Is Overlap"); return "true"
+            }
+        }
+    }
+    {
+        console.log("Is NOT Overlap"); return "false"
+    }
+}
+
+//window.onbeforeunload = function () {   $.busyLoadFull("show");
+// }
+
+
+
+//$(window).onbeforeunload(function () {
+//    $.busyLoadFull("show");
+
+//});
+
+///$(window).load(function () {
+
+//    $.busyLoadFull("hide"); 
+//});
+
+function GetCheckedBoxesFromtbl(TableID)
+{
+    
+    var result = '';
+    $(TableID + "> tbody > tr").each(function (i, tr)
+    {
+        console.log($(tr).find('td input[type = "checkbox"].tblcb').length);
+        console.log($(tr).find('td input[type = "checkbox"].tblcb').is(':checked'));
+        if ($(tr).find('td input[type = "checkbox"].tblcb').is(':checked'))
+            result += ',' + $(tr).find('td input[type = "checkbox"].tblcb').attr('itemid');
+
+
+    });
+
+
+    if (result.trim() != '')
+        result = result.trim().substring(1);
+    else
+        result = "0"
+
+    console.log('checked Items : ' + result);
+    return result;
+}
+
+function GetAllSelectedCheckBoxesByDivID(Div_ID_Class, AttributeName) {
+    debugger;
+    var Data = {};
+    Data.AccountsChecked = [];
+    Data.AccountsUnChecked = [];
+
+    $(Div_ID_Class + " input:checkbox").each(function () {
+        var $this = $(this);
+
+        if ($this.is(":checked")) {
+            if ($this.attr(AttributeName) != undefined && $this.attr(AttributeName) != null && $this.attr(AttributeName) != "" && $this.attr(AttributeName) != 0)
+                Data.AccountsChecked.push($this.attr(AttributeName));
+        } else {
+            Data.AccountsUnChecked.push($this.attr(AttributeName));
+        }
+    });
+
+    return Data.AccountsChecked;
+}
+
+function GetCheckedBoxesFromtbl_CbClass(TableID,CbClass) {
+
+    var result = '';
+    $(TableID + "> tbody > tr").each(function (i, tr) {
+        //console.log($(tr).find('td input[type = "checkbox"].' + CbClass+'').length);
+        //console.log($(tr).find('td input[type = "checkbox"].' + CbClass +'').is(':checked'));
+        if ($(tr).find('td input[type = "checkbox"].' + CbClass +'').is(':checked'))
+            result += ',' + $(tr).find('td input[type = "checkbox"].' + CbClass +'').attr('itemid');
+    });
+
+
+    if (result.trim() != '')
+        result = result.trim().substring(1);
+    else
+        result = "0"
+
+    console.log('checked Items : ' + result);
+    return result;
+}
+
+function RemoveRowsNotSelected(TableID, CbClass)
+{
+    debugger;
+    $(TableID + " > tbody > tr").each(function (i, tr) {
+
+        if ($(tr).find('td input[type = "checkbox"].' + CbClass + '').is(':checked'))
+        { }
+        else
+        { $(tr).remove(); }
+    });
+}
+function RemoveRowSelected(TableID, CbClass) {
+    debugger;
+    $(TableID + " > tbody > tr").each(function (i, tr) {
+
+        if ($(tr).find('td input[type = "checkbox"].' + CbClass + '').is(':checked')) { $(tr).remove();}
+        else {  }
+    });
+}
+
+function GetAllAttributeValuesInTable(TableID, tdName, AttributeName) {
+    
+    var result = '';
+    $(TableID + "> tbody > tr").each(function (i, tr) {
+        result += ',' + $(tr).find('td.' + tdName + '').attr('' + AttributeName + '')
+
+    });
+    if (result.trim() != '')
+        result = result.trim().substring(1);
+    else
+        result = "0"
+
+    return result;
+}
+
+function GetSumAllAttributeValuesInTable(TableID, tdName, AttributeName, IncludeChecked) {
+    var result = 0.0;
+    $(TableID + "> tbody > tr").each(function (i, tr) {
+        if (IncludeChecked == '' || IncludeChecked == 0 || IncludeChecked == null || IncludeChecked == undefined) {
+            if ($(tr).find('td.' + tdName + '').attr('' + AttributeName + '') == '' || $(tr).find('td.' + tdName + '').attr('' + AttributeName + '') == 0 || $(tr).find('td.' + tdName + '').attr('' + AttributeName + '') == undefined) { }
+            else
+                result += parseFloat($(tr).find('td.' + tdName + '').attr('' + AttributeName + ''));
+        }
+        else {
+            if ($(tr).find("td." + IncludeChecked + " input").attr("checked") == "checked") {
+                result += parseFloat($(tr).find('td.' + tdName + '').attr('' + AttributeName + ''));
+            }
+        }
+    });
+    //if (result.trim() != '')
+    //    result = result.trim().substring(1);
+    //else
+    //    result = "0"
+
+    return result;
+}
+
+function GetSumAllInputsValuesInAttributeInTable(TableID, input_td, checkbox_td) {
+    debugger;
+    var result = 0.0;
+    $(TableID + "> tbody > tr").each(function (i, tr) {
+        if (checkbox_td != null && checkbox_td != undefined && checkbox_td != "")
+        {
+            if ($(tr).find('td.' + checkbox_td + ' input').prop('checked') && $(tr).find('td.' + input_td + ' input').val() != "")
+            {
+                result += parseFloat($(tr).find('td.' + input_td + ' input').val());
+                result = Math.round(result * 100) / 100;
+            }
+        }
+        else
+        {
+            if ($(tr).find('td.' + input_td + ' input').val() != "")
+            {
+                result += parseFloat($(tr).find('td.' + input_td + ' input').val());
+                result = Math.round(result * 100) / 100;
+            }
+        }
+
+        //if ($(tr).find('td.' + tdName + '').attr('' + AttributeName + '') == '' || $(tr).find('td.' + tdName + '').attr('' + AttributeName + '') == 0 || $(tr).find('td.' + tdName + '').attr('' + AttributeName + '') == undefined) { }
+        //else
+        //    result += parseFloat($(tr).find('td.' + tdName + '').attr('' + AttributeName + ''));
+    });
+    
+    return result;
+}
+
+function MathRound(BasicNumber)
+{
+    var result = 0.0;
+    result = Math.round(BasicNumber * 100) / 100;
+    return result;
+}
+function CheckMinusValues(TableID, _td, _input,AttrName,GetTdText)
+{
+    debugger;
+    var ReturnedValue = true;
+    $(TableID + " > tbody > tr").each(function (i, tr) {
+        if (_input != null && _input != undefined && _input != "")
+        {
+            if ($(tr).find('td.' + _td + ' input').val() != "")
+                if (parseFloat($(tr).find('td.' + _td + ' input').val()) < 0)
+                    ReturnedValue = false;// break;
+        }
+        else if (AttrName != null && AttrName != undefined && AttrName != "")
+        {
+            if ($(tr).find('td.' + _td + '').attr(AttrName) != "")
+                if (parseFloat($(tr).find('td.' + _td + '').attr(AttrName)) < 0)
+                    ReturnedValue =  false;// break;
+        }
+        else if (GetTdText != null && GetTdText != undefined && GetTdText != "")
+        {
+            if ($(tr).find('td.' + _td + '').text() != "")
+                if (parseFloat($(tr).find('td.' + _td + '').text()) < 0)
+                    ReturnedValue = false;// break;
+        }
+    });
+    return ReturnedValue;
+}
+
+//function GetSumAllInputValuesInTdTable_InputText(TableID, tdName) {
+
+//    var result = 0.0;
+//    $(TableID + "> tbody > tr").each(function (i, tr) {
+//        if ($(tr).find('td.' + tdName + ' input[type=text]').val() == '' || $(tr).find('td.' + tdName + ' input[type=text]').val() == 0 || $(tr).find('td.' + tdName + ' input[type=text]').val() == undefined) { }
+//        else
+//            result += parseFloat($(tr).find('td.' + tdName + ' input[type=text]').val()).toFixed(2);
+//    });
+//    //$($("#tblCashDetails > tbody > tr")[0]).find("td.Value ").val()
+
+//    return result;
+//}
+function GetSumAllInputValuesInTdTable_InputText(TableID, tdName, InputType) {
+
+    var result = 0.0;
+
+    if (InputType == undefined || InputType == "undefined" || InputType == null || InputType == "") { InputType = "text"; }
+
+    $(TableID + "> tbody > tr").each(function (i, tr) {
+        if ($(tr).find('td.' + tdName + ' input[type=' + InputType + ']').val() == '' || $(tr).find('td.' + tdName + ' input[type=' + InputType + ']').val() == 0 || $(tr).find('td.' + tdName + ' input[type=' + InputType + ']').val() == undefined) { }
+        else
+            result += parseFloat($(tr).find('td.' + tdName + ' input[type=' + InputType + ']').val());//.toFixed(2);
+    });
+    //$($("#tblCashDetails > tbody > tr")[0]).find("td.Value ").val()
+	result = result.toFixed(2);
+    return result;
+}
+
+function ConvertDateFormat(pDateToConvert)
+{
+    if (pDateToConvert != "") {
+        //if (isValidDate(pDateToConvert, 1)) { //the 2nd param is 1 coz its still in dd/mm/yyyy format(if correct format then convert)
+
+        try {
+          //  if (pDateToConvert.split('/')[2].length == 2) {
+                //var ddmmyyy = (pDateToConvert.split('/')[1].length == 1 ? "0" + pDateToConvert.split('/')[1] : pDateToConvert.split('/')[1]) + "/"
+                //    + (pDateToConvert.split('/')[0].length == 1 ? "0" + pDateToConvert.split('/')[0] : pDateToConvert.split('/')[0]) + "/"
+                //    + '20' +  pDateToConvert.split('/')[2];
+                //return ddmmyyy;
+         //   }
+         //   else
+          //  {
+            var ddmmyyy =
+                (pDateToConvert.split('/')[1].length == 1 ? "0" + pDateToConvert.split('/')[1] : pDateToConvert.split('/')[1]) + "/"
+                    + (pDateToConvert.split('/')[0].length == 1 ? "0" + pDateToConvert.split('/')[0] : pDateToConvert.split('/')[0]) + "/"
+                    + pDateToConvert.split('/')[2];
+                return ddmmyyy;
+         //   }
+
+           
+        }
+        catch
+        {
+            return "01/01/1900";
+        }
+        //}
+        //else
+        //    return 0;
+    }
+    else
+        return "";//return "1";
+}
+
+function ToLongDate(date) {
+    var monthNames = [
+        "January", "February", "March",
+        "April", "May", "June", "July",
+        "August", "September", "October",
+        "November", "December"
+    ];
+
+    var day = date.getDate();
+    var monthIndex = date.getMonth();
+    var year = date.getFullYear();
+
+    return day + ' ' + monthNames[monthIndex] + ' ' + year;
+}
+
+//parameter ex : '#tblID'
+
+function CheckAll(This , tblID)
+{
+    setTimeout(function ()
+    {
+        if ($(This).is(':checked'))
+        {
+            $(tblID + ' > tbody > tr').each(function (i, tr) {
+                var cb = $(tr).find('td input[type="checkbox"].tblcb');
+                $(cb).prop('checked', true);
+                ItemsIDs = '-' + ItemsIDs + $(cb).attr('ItemID') + '-';
+            });
+        }
+        else
+        {
+            $(tblID + ' > tbody > tr').each(function (i, tr) {
+                var cb = $(tr).find('td input[type="checkbox"].tblcb');
+                $(cb).prop('checked', false);
+                ItemsIDs = '';
+            });
+
+        }
+
+
+
+    }, 20);
+
+}
+
+
+
+function ResetPagination(paginationID ,  Total)
+{
+    $(paginationID).twbsPagination({
+        totalPages: Total,
+        visiblePages: 10,
+        onPageClick: function (event, page)
+        {
+            GetNextPage(page); 
+          
+        }
+    });
+
+}
+
+
+
+function setCheckboxAsRadioButton()
+{
+    $(".cbrb").change(function () {
+        $(".cbrb").prop('checked', false);
+        $(this).prop('checked', true);
+    });
+}
+
+
+
+
+
+
+//@@@@@@@@@@@@@@@@@@@@@@@@@@ Forms @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+// Clear All Controls Inside The Given Container Name
+function Forms_ClearAll(containerName, callback)
+{
+    $('input[type="text"].validation-error').removeClass("validation-error");
+    $('select.validation-error').removeClass("validation-error");
+
+    // Reset Textbox Array list
+    var _ListofControls = $(containerName.toString() + ' input[type="text"]');
+    if (_ListofControls != null && _ListofControls != undefined) {
+        $.each(_ListofControls, function (i, item) {
+            $(item).val("");
+        });
+    }
+    var _ListofControls = $(containerName.toString() + ' input[type="number"]');
+    if (_ListofControls != null && _ListofControls != undefined) {
+        $.each(_ListofControls, function (i, item) {
+            $(item).val("");
+        });
+    }
+    // Reset Textbox Array list
+    var _ListofControls = $(containerName.toString() + ' textarea');
+    if (_ListofControls != null && _ListofControls != undefined) {
+        $.each(_ListofControls, function (i, item) {
+            $(item).val("");
+        });
+    }
+    // Reset Hidden Array list
+    _ListofControls = $(containerName.toString() + ' input[type="hidden"]');
+    if (_ListofControls != null && _ListofControls != undefined) {
+        $.each(_ListofControls, function (i, item) {
+            $(item).val("");
+        });
+    }
+    // Reset Selection Options Array list
+    _ListofControls = $(containerName.toString() + ' select');
+    if (_ListofControls != null && _ListofControls != undefined) {
+        $.each(_ListofControls, function (i, item) {
+            item.selectedIndex = 0;
+        });
+    }
+    // Reset Checkbox Array list
+    _ListofControls = $(containerName.toString() + ' input[type="checkbox"]');
+    if (_ListofControls != null && _ListofControls != undefined) {
+        $.each(_ListofControls, function (i, item) {
+            $(item).prop('checked', false);
+        });
+    }
+
+    // Reset data-parsley-type="number" Array list
+    _ListofControls = $(containerName.toString() + ' input[data-parsley-type="number"]');
+    if (_ListofControls != null && _ListofControls != undefined) {
+        $.each(_ListofControls, function (i, item) {
+            $(item).val("");
+        });
+    }
+
+    $(".alert-danger").slideUp();
+
+    if (callback != null && callback != undefined)
+        callback();
+}
+function Modal_Form_ClearAll(ModalID)
+{
+    $('#' + ModalID+'').on('hidden.bs.modal', function () {
+        $(this).find('form')[0].reset();
+    });
+}
+//-------------------------------------
+var IsDate = "IsDate";
+var IsTime = "IsTime";
+var IsCombo = "IsCombo";
+var IsDecimal = "IsDecimal";
+var IsText = "IsText";
+var IsTextarea = "IsTextArea";
+var IsInt = "IsInt";
+var IsPassword = "IsPassword";
+var IsEmpty = "IsEmpty";
+var IsLine = "IsLine";
+var IsBreakLine = "IsBreakLine";
+var IsBreakPage = "IsBreakPage";
+var IsBool = "IsBool";
+var IsButton = "IsButton";
+var IsOneOfItems_Select = "IsOneOfItems_Select";
+var IsOneOfItems_RadioButton = "IsOneOfItems_RadioButton";
+
+//--------------------------------------
+
+//@@@@@@@@@@@@@@@@@@@@@@@@ Ajax @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+
+
+
+
+
+//@@@@@@@@@@@@@@@@@@@@@@@@@ Select @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+function Combo_ClearAllOptions(pSelectID) {
+    $('#' + pSelectID)
+        .find('option')
+        .remove()
+        .end();
+}
+
+function ClearTableRows(TableId)
+{
+    $("#" + TableId+" > tbody > tr").remove();
+}
+/******************************Mostafa fns*************************************/
+//FunUrl,
+//ID_Name ,
+//Item_Name,
+//Title, 
+//SelectInput_ID,
+//Selected_ID
+function Fill_SelectInput(FunUrl, ID_Name, Item_Name, Title, SelectInput_ID, Selected_ID , SlimObject) {
+    
+    $.ajax({
+        type: "POST",
+        url:  FunUrl,
+        data: {},
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (d) {
+            // console.log(r.d[0]);
+            var selectedVal = null;
+            var option = "";
+            if (Title != null)
+                option = '<option value="">' + Title + '</option>';
+            $.each(JSON.parse(d[0]), function (i, item) {
+                console.log(item[ID_Name]);
+
+
+                if (item[ID_Name] == Selected_ID) {
+
+                    option += '<option value="' + item[ID_Name] + '" selected "> ' + ((item[Item_Name] == null || item[Item_Name] == "") ? "X" : item[Item_Name] ).trim() + '</option>';
+                    selectedVal = item[ID_Name];
+
+                }
+                else {
+                    option += '<option value="' + item[ID_Name] + '"> ' + ((item[Item_Name] == null || item[Item_Name] == "") ? "X" : item[Item_Name] ).trim() + '</option>';
+                }
+            });
+
+
+            $(SelectInput_ID).html("");
+            $(SelectInput_ID).append(option);
+
+
+
+
+            if (selectedVal != null && typeof selectedVal !== "undefined" && selectedVal != "" ) {
+                if (SlimObject != null && typeof SlimObject !== "undefined") {
+                    setTimeout(function () { SlimObject.set(Selected_ID); }, 500);
+
+                }
+            }
+
+
+
+            if (r.result.length == 1) {
+                if (selectedVal != null && typeof selectedVal !== "undefined") {
+                    if (SlimObject != null && typeof SlimObject !== "undefined") {
+
+                        setTimeout(function () { SlimObject.set((d[0])[ID_Name]); }, 500);
+                    }
+                }
+            }
+
+
+
+
+        },
+        error: function (jqXHR, exception) {
+           // swal("Oops!", "Please, contact your technical support!", "error");
+
+
+        }
+    });
+
+
+}
+function Fill_SelectInputAfterLoadData(data, ID_Name, Item_Name, Title, SelectInput_ID, Selected_ID, SlimObject) {
+
+  //  //debugger
+    try {
+        var option = "";
+        if (Title != null)
+            option = '<option value="">' + Title + '</option>';
+        var selectedVal = Selected_ID;
+        $.each(data, function (i, item) {
+            // console.log(item[ID_Name]);
+
+          
+            if (item[ID_Name] == Selected_ID) {
+
+                option += '<option value="' + item[ID_Name] + '" selected "> ' + ((item[Item_Name]).toString()).trim() + '</option>';
+                selectedVal = item[ID_Name];
+            }
+            else {
+                if ((item[Item_Name]) != null)
+                    option += '<option value="' + item[ID_Name] + '"> ' + ((item[Item_Name]).toString()).trim() + '</option>';
+            }
+        });
+
+
+        $(SelectInput_ID).html("");
+        $(SelectInput_ID).append(option);
+
+
+
+
+        if (selectedVal != null && typeof selectedVal !== "undefined") {
+            if (SlimObject != null && typeof SlimObject !== "undefined") {
+                SlimObject.set(selectedVal);
+            }
+        }
+
+
+
+        if (data.length == 1) {
+            if (selectedVal != null && typeof selectedVal !== "undefined") {
+                if (SlimObject != null && typeof SlimObject !== "undefined") {
+                    SlimObject.set((data[0])[ID_Name]);
+                }
+            }
+        }
+
+    }
+    catch(Ex)
+    {
+
+        console.log("Error In ComboBox " + SelectInput_ID + "");
+        console.log(Ex);
+    }
+
+
+
+}
+function Fill_SelectInputAfterLoadDataMultiLang(data, ID_Name, Item_Name, Title, TitleAr, SelectInput_ID, Selected_ID, SlimObject, FillAnotherSelects, OneRowSelected, HiddenAttributes)
+{
+
+    //  //debugger
+    try {
+        var option = "";
+        if (Title != null) {
+            if (ActiveLanguage == 1)//English
+                option = '<option value=""  "font-size:40px;">' + Title + '</option>';
+            if (ActiveLanguage == 2)//Arabic
+                option = '<option value="" stle="background-color: yellow;">' + TitleAr + '</option>';
+        }
+        
+        var selectedVal = Selected_ID;
+        $.each(data, function (i, item) {
+            // console.log(item[ID_Name]);
+
+            if (HiddenAttributes != null && typeof HiddenAttributes != "undefined")
+            {
+                var TextHiddenAttributes = "";
+                $(HiddenAttributes).each(function (i, TheObject) {
+                    TextHiddenAttributes += TheObject + "='" + (item[TheObject] == null ? "" : item[TheObject]) + "'";
+                });
+                if (item[ID_Name] == Selected_ID || (OneRowSelected == 1 && i == 0)) {
+
+                    option += '<option value="' + item[ID_Name] + '" ' + TextHiddenAttributes+' selected "> ' + ((item[Item_Name]).toString()).trim() + '</option>';
+                    selectedVal = item[ID_Name];
+                }
+                else {
+                    if ((item[Item_Name]) != null)
+                        option += '<option value="' + item[ID_Name] + '" ' + TextHiddenAttributes +' > ' + ((item[Item_Name]).toString()).trim() + '</option>';
+                }
+            }
+            else
+            {
+                if (item[ID_Name] == Selected_ID || (OneRowSelected == 1 && i == 0))
+                {
+
+                    option += '<option value="' + item[ID_Name] + '" selected "> ' + ((item[Item_Name]).toString()).trim() + '</option>';
+                    selectedVal = item[ID_Name];
+                }
+                else
+                {
+                    if ((item[Item_Name]) != null)
+                        option += '<option value="' + item[ID_Name] + '"> ' + ((item[Item_Name]).toString()).trim() + '</option>';
+                }
+            }
+
+           
+        });
+
+
+        $(SelectInput_ID).html("");
+        $(SelectInput_ID).append(option);
+
+        if (FillAnotherSelects != null && typeof FillAnotherSelects !== "undefined")
+        {
+            for (let i = 0; i < FillAnotherSelects.length; ++i)
+            {
+                $(FillAnotherSelects[i]).html("");
+                $(FillAnotherSelects[i]).append(option);
+            }
+        }
+
+        if (selectedVal != null && typeof selectedVal !== "undefined") {
+            if (SlimObject != null && typeof SlimObject !== "undefined") {
+                SlimObject.set(selectedVal);
+            }
+        }
+
+
+
+        if (data.length == 1) {
+            if (selectedVal != null && typeof selectedVal !== "undefined") {
+                if (SlimObject != null && typeof SlimObject !== "undefined") {
+                    SlimObject.set((data[0])[ID_Name]);
+                }
+            }
+        }
+
+    }
+    catch (Ex) {
+
+        console.log("Error In ComboBox " + SelectInput_ID + "");
+        console.log(Ex);
+    }
+
+
+
+}
+function Fill_SelectInputAfterLoadDataMultiLangMultiTextShow(data, ID_Name, Item_Name, Item_Name2, Title, TitleAr, SelectInput_ID, Selected_ID, SlimObject, FillAnotherSelect, HiddenAttributes) {
+
+    //  //debugger
+    try {
+        var option = "";
+        if (Title != null) {
+            if (ActiveLanguage == 1)//English
+                option = '<option value=""  "font-size:40px;">' + Title + '</option>';
+            if (ActiveLanguage == 2)//Arabic
+                option = '<option value="">' + TitleAr + '</option>';
+        }
+
+        var selectedVal = Selected_ID;
+        $.each(data, function (i, item) {
+            // console.log(item[ID_Name]);
+            if (HiddenAttributes != null && typeof HiddenAttributes != "undefined")
+            {
+                var TextHiddenAttributes = "";
+                $(HiddenAttributes).each(function (i, TheObject) {
+                    TextHiddenAttributes += TheObject + "='" + item[TheObject] + "'";
+                });
+                if (item[ID_Name] == Selected_ID)
+                {
+                    option += '<option value="' + item[ID_Name] + '"  ' + TextHiddenAttributes + '  selected > ' + ((item[Item_Name]).toString()).trim() + ' - ' + (item[Item_Name2] == null? "" : ((item[Item_Name2]).toString()).trim()) + ' </option>';
+                    selectedVal = item[ID_Name];
+                }
+                else
+                {
+                    if ((item[Item_Name]) != null)
+                        option += '<option value="' + item[ID_Name] + '" ' + TextHiddenAttributes + ' > ' + ((item[Item_Name]).toString()).trim() + ' - ' + (item[Item_Name2] == null ? "" : ((item[Item_Name2]).toString()).trim()) + '</option>';
+                    else if ((item[Item_Name2]) != null)
+                        option += '<option value="' + item[ID_Name] + '" ' + TextHiddenAttributes + ' > ' + (item[Item_Name2] == null ? "" : ((item[Item_Name2]).toString()).trim()) + '</option>';
+
+                }
+            }
+            else {
+                if (item[ID_Name] == Selected_ID) {
+
+                    option += '<option value="' + item[ID_Name] + '" selected > ' + ((item[Item_Name]).toString()).trim() + ' - ' + (item[Item_Name2] == null ? "" : ((item[Item_Name2]).toString()).trim()) + ' </option>';
+                    selectedVal = item[ID_Name];
+                }
+                else {
+                    if ((item[Item_Name]) != null)
+                        option += '<option value="' + item[ID_Name] + '"> ' + ((item[Item_Name]).toString()).trim() + ' - ' + (item[Item_Name2] == null ? "" : ((item[Item_Name2]).toString()).trim()) + '</option>';
+                    else if ((item[Item_Name2]) != null)
+                        option += '<option value="' + item[ID_Name] + '"> ' + (item[Item_Name2] == null ? "" : ((item[Item_Name2]).toString()).trim()) + '</option>';
+
+                }
+            }
+           
+        });
+
+        $(SelectInput_ID).html("");
+        $(SelectInput_ID).append(option);
+
+        if (FillAnotherSelect != null && typeof FillAnotherSelect !== "undefined") {
+            $(FillAnotherSelect).html("");
+            $(FillAnotherSelect).append(option);
+
+        }
+
+        if (selectedVal != null && typeof selectedVal !== "undefined") {
+            if (SlimObject != null && typeof SlimObject !== "undefined") {
+                SlimObject.set(selectedVal);
+            }
+        }
+
+
+
+        if (data.length == 1) {
+            if (selectedVal != null && typeof selectedVal !== "undefined") {
+                if (SlimObject != null && typeof SlimObject !== "undefined") {
+                    SlimObject.set((data[0])[ID_Name]);
+                }
+            }
+        }
+
+    }
+    catch (Ex) {
+
+        console.log("Error In ComboBox " + SelectInput_ID + "");
+        console.log(Ex);
+    }
+
+
+
+}
+//Like CostCenterInChartOfAccounts
+function Fill_SelectInputAfterLoadDataMultiLangTwoColumns(data, ID_Name, Item_Name, Item_Name2, Title, TitleAr, SelectInput_ID, Selected_ID, SlimObject, FillAnotherSelect) {
+
+    //  //debugger
+    try {
+        var option = "";
+        if (Title != null) {
+            if (ActiveLanguage == 1)//English
+                option = '<option value=""  "font-size:40px;">' + Title + '</option>';
+            if (ActiveLanguage == 2)//Arabic
+                option = '<option value="">' + TitleAr + '</option>';
+        }
+
+        var selectedVal = Selected_ID;
+        $.each(data, function (i, item) {
+            // console.log(item[ID_Name]);
+
+            if (item[ID_Name] == Selected_ID) {
+                option += '<option value="' + item[ID_Name] + '" selected "> ' + ((item[Item_Name]).toString()).trim() + ' : ' + ((item[Item_Name2]).toString()).trim() + '</option>';
+                selectedVal = item[ID_Name];
+            }
+            else {
+                if ((item[Item_Name]) != null)
+                    option += '<option value="' + item[ID_Name] + '"> ' + ((item[Item_Name]).toString()).trim() + ' : ' + ((item[Item_Name2]).toString()).trim() + '</option>';
+            }
+        });
+
+        $(SelectInput_ID).html("");
+        $(SelectInput_ID).append(option);
+
+        if (FillAnotherSelect != null && typeof FillAnotherSelect !== "undefined") {
+            $(FillAnotherSelect).html("");
+            $(FillAnotherSelect).append(option);
+        }
+        if (selectedVal != null && typeof selectedVal !== "undefined") {
+            if (SlimObject != null && typeof SlimObject !== "undefined") {
+                SlimObject.set(selectedVal);
+            }
+        }
+
+        if (data.length == 1) {
+            if (selectedVal != null && typeof selectedVal !== "undefined") {
+                if (SlimObject != null && typeof SlimObject !== "undefined") {
+                    SlimObject.set((data[0])[ID_Name]);
+                }
+            }
+        }
+
+    }
+    catch (Ex) {
+        console.log("Error In ComboBox " + SelectInput_ID + "");
+        console.log(Ex);
+    }
+
+}
+function Fill_SelectInputAfterLoadData_WithTitle(data, ID_Name, Item_Name, optgroupID, optgroupName, Title, SelectInput_ID, Selected_ID) {
+
+
+
+    var option = "";
+    option = '<option value="">' + Title + '</option>';
+    option = '<option value="100000">ALL</option>';
+    var CurrentItem = 0;
+    var LastItem = 0;
+
+    $.each(data, function (i, item) {
+        // console.log(item[ID_Name]);
+        CurrentItem = item.DegreeID
+        if (i == 0 && CurrentItem != LastItem)
+        {
+            option += '<optgroup  value="' + item[optgroupID] + '"  label="' + item[optgroupName] + '" >';
+        }
+        if (i != 0 && CurrentItem != LastItem && i < (data.length-1))
+        {
+            option += '</optgroup>';
+            option += '<optgroup  value="' + item[optgroupID] + '"  label="' + item[optgroupName] + '" >';
+        } 
+       
+
+        if (item[ID_Name] == Selected_ID) {
+
+            option += '<option value="' + item[ID_Name] + '" selected "> ' + ((item[Item_Name] == null || item[Item_Name] == "") ? "X" : item[Item_Name] ).trim() + '</option>';
+
+        }
+        else
+        {
+            option += '<option value="' + item[ID_Name] + '"> ' + ((item[Item_Name] == null || item[Item_Name] == "") ? "X" : item[Item_Name] ).trim() + '</option>';
+        }
+
+        if (i != 0 && CurrentItem != LastItem && i == (data.length - 1)) {
+            option += '</optgroup>';
+            //option += '<optgroup  value="' + item[optgroupID] + '"  label="' + item[optgroupName] + '" >';
+        } 
+        LastItem = CurrentItem;
+    });
+
+
+    $(SelectInput_ID).html("");
+    $(SelectInput_ID).append(option);
+
+
+
+
+
+}
+function Fill_SelectInput_WithDependedID(FunUrl, ID_Name, Item_Name, Title, SelectInput_ID, Selected_ID, DependedID, SlimObject) {
+    //FadePageCover(true);
+    //debugger;
+    $.ajax({
+        type: "GET",
+        url: FunUrl,
+        data: { pID: DependedID },
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (r) {
+            //  console.log(r.d[0]);
+           
+            var selectedVal = Selected_ID;
+            var option = "";
+            if (Title != null)
+                option = '<option value="">' + Title + '</option>';
+           // option = '<option value="">' + Title + '</option>';
+            $.each(r.result, function (i, item) {
+                console.log(item[ID_Name]);
+
+
+
+                if (item[ID_Name] == Selected_ID) {
+
+                    option += '<option value="' + item[ID_Name] + '" selected "> ' + ((item[Item_Name] == null || item[Item_Name] == "") ? "X" : item[Item_Name] ).trim() + '</option>';
+                    selectedVal = item[ID_Name];
+
+                }
+                else {
+                    option += '<option value="' + item[ID_Name] + '"> ' + ((item[Item_Name] == null || item[Item_Name] == "") ? "X" : item[Item_Name] ).trim() + '</option>';
+                }
+            });
+
+
+            $(SelectInput_ID).html("");
+            $(SelectInput_ID).append(option);
+
+
+
+
+            if (selectedVal != null && typeof selectedVal !== "undefined") {
+                if (SlimObject != null && typeof SlimObject !== "undefined") {
+                    setTimeout(function () { SlimObject.set(Selected_ID); }, 500);
+                    
+                }
+            }
+
+
+
+            if (r.result.length == 1) {
+                if (selectedVal != null && typeof selectedVal !== "undefined") {
+                    if (SlimObject != null && typeof SlimObject !== "undefined") {
+                       
+                        setTimeout(function () { SlimObject.set((data[0])[ID_Name]);}, 500);
+                    }
+                }
+            }
+
+
+
+
+
+            //FadePageCover(false);
+            
+        },
+        error: function (jqXHR, exception) {
+            console.log("error in combo box : " + SelectInput_ID + " " ); 
+        }
+    });
+
+
+}
+function Fill_SelectInput_WithWhereCondition(FunUrl, ID_Name, Item_Name, Title, SelectInput_ID, Selected_ID, WhereClause, SlimObject)
+{
+    //FadePageCover(true);
+    $.ajax({
+        type: "GET",
+        url: FunUrl,
+        data: { pWhereClause: WhereClause },
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (d) {
+            //  console.log(r.d[0]);
+            var selectedVal = null;
+            var option = "";
+            if (Title != null)
+                option = '<option value="">' + Title + '</option>';
+            $.each(JSON.parse(d[0]), function (i, item) {
+                console.log(item[ID_Name]);
+
+
+                if (item[ID_Name] == Selected_ID) {
+
+                    option += '<option value="' + item[ID_Name] + '" selected "> ' + ((item[Item_Name] == null || item[Item_Name] == "") ? "X" : item[Item_Name] ).trim() + '</option>';
+                    selectedVal = item[ID_Name];
+
+                }
+                else {
+                    option += '<option value="' + item[ID_Name] + '"> ' + ((item[Item_Name] == null || item[Item_Name] == "") ? "X" : item[Item_Name] ).trim() + '</option>';
+                }
+            });
+
+
+            $(SelectInput_ID).html("");
+            $(SelectInput_ID).append(option);
+            //FadePageCover(false);
+
+
+            if (selectedVal != null && typeof selectedVal !== "undefined") {
+                if (SlimObject != null && typeof SlimObject !== "undefined") {
+                    SlimObject.set(selectedVal);
+                }
+            }
+
+
+
+            if (d.result.length == 1) {
+                if (selectedVal != null && typeof selectedVal !== "undefined") {
+                    if (SlimObject != null && typeof SlimObject !== "undefined") {
+                        SlimObject.set((data[0])[ID_Name]);
+                    }
+                }
+            }
+
+        },
+        error: function (jqXHR, exception) {
+            swal("Oops!", "Please, contact your technical support!", "error");
+        }
+    });
+}
+
+
+
+function Fill_SelectInputAfterLoadData_WithMultiAttr(data, ID_Name, Item_Name, Title, SelectInput_ID, Selected_ID, AttrItemNames, SlimObject) {
+    var selectAttrs = "";
+    var option = "";
+    var selectedVal = Selected_ID; 
+    if (Title != null)
+        option = '<option value="">' + Title + '</option>';
+    $.each(data, function (i, item) {
+        // console.log(item[ID_Name]);
+        selectAttrs = "";
+        $(AttrItemNames.split(",")).each(function (attrindex, attr) {
+            // element == this
+            selectAttrs += ' ' + attr + ' = "' + item[attr] + '" ';
+            if (attrindex == AttrItemNames.split(",").length - 1) {
+               
+                    if (item[ID_Name] == Selected_ID) {
+                        option += '<option' + selectAttrs + ' value="' + item[ID_Name] + '" selected> ' + (item[Item_Name]) + '</option>';
+                        selectedVal = item[ID_Name];
+                    }
+                    else {
+                        option += '<option' + selectAttrs + ' value="' + item[ID_Name] + '"> ' + (item[Item_Name])+ '</option>';
+                    }
+               
+            }
+        });
+    });
+    $(SelectInput_ID).html("");
+    $(SelectInput_ID).append(option);
+
+
+
+
+    if (selectedVal != null && typeof selectedVal !== "undefined" && selectedVal != "") {
+        if (SlimObject != null && typeof SlimObject !== "undefined") {
+            SlimObject.set(selectedVal);
+        }
+    }
+
+
+
+    if (data.length == 1) {
+        if (selectedVal != null && typeof selectedVal !== "undefined") {
+            if (SlimObject != null && typeof SlimObject !== "undefined") {
+                SlimObject.set((data[0])[ID_Name]);
+            }
+        }
+    }
+}
+
+
+
+/******************************EOF Mostafa fns*************************************/
+
+//@@@@@@@@@@@@@@@@@@@@@@@@ Table @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+function Table_ClearAllTableRows(pHTMLTableID) {
+    $("#" + pHTMLTableID + " tbody tr").remove();
+}
+
+
+
+//@@@@@@@@@@@@@@@@@@@@@@@@ CheckBox @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+
+
+
+//@@@@@@@@@@@@@@@@@@@@@ Number @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+//****************** Get Round 2 points from Decimal Number ***************** 
+function DecimalGetRoundTwo(pNumber)
+{
+    if (pNumber == null)//updated by kelany
+        return null;
+    else
+        return (Math.round(pNumber * 100) / 100);
+}
+function DecimalCount(number) {
+    // Convert to String
+    var numberAsString = number.toString();
+    // String Contains Decimal
+    if (numberAsString.includes('.')) {
+        return numberAsString.split('.')[1].length;
+    }
+    // String Does Not Contain Decimal
+    return 0;
+}
+
+
+
+
+
+//@@@@@@@@@@@@@@@@@ Text @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+
+
+
+
+//@@@@@@@@@@@@@@@@ Arabic @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+
+
+
+//@@@@@@@@@@@@@@@ Image @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+function ReloadImg(id)
+{
+    debugger;
+    //$('#' + id).attr('src', '/Content/Images/Image.jpg');
+    $('#' + id).attr('onerror', null);
+    console.log(id);
+}
+
+function ReloadImgUser(id) {
+    debugger;
+    //$('#' + id).attr('src', '/Content/Images/1474259113_male3.png');
+    $('#' + id).attr('onerror', null);
+    console.log(id);
+}
+
+function Img_Zoom(id, size) {
+    $('#' + id).css('width', size + 'rem' );
+    $('#' + id).css('height', size + 'rem');
+
+
+
+
+}
+
+
+var reader = new FileReader();
+var fileName = '';
+function AfterUploadImg(id, fileobject , ItemName) {
+    //debugger;
+    if (typeof (FileReader) != "undefined") {
+        var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
+        // $($(fileobject).files).each(function () {
+        var file = fileobject.files[0];
+        if (regex.test(file.name.toLowerCase())) {
+            fileName = file.name;
+            reader.readAsDataURL(file);
+            
+           // $('#BtnSaveImg-' + ItemName + '-' + ID).addClass('hide');
+            $('#BtnSaveImg-' + ItemName + '-' + id).removeClass('hide');
+            console.log('#BtnSaveImg-' + ItemName + '-' + id);
+
+        } else {
+            alert(file.name + " is not a valid image file.");
+            return false;
+        }
+        // });
+    } else {
+        alert("This browser does not support HTML5 FileReader.");
+    }
+}
+
+
+var ImageData = new Object(); 
+function SaveImage(ID , Path , ItemName) {
+    //debugger;
+   // FadePageCover(true);
+    $.busyLoadFull("show");
+    var byteData = reader.result;
+    byteData = byteData.split(';')[1].replace("base64,", "");
+    ImageData.pID = ID;
+    ImageData.pData =byteData;
+    ImageData.pName = fileName;
+   
+
+    console.log(JSON.stringify(ImageData));
+    $.ajax({
+        type: "POST",
+        url: Path,
+        data: JSON.stringify({pImageData : ImageData}) , 
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (r) {
+            if (r.result != "0" || r.result != 0)
+            {
+                $('#Img-' + ItemName + '-' + ID).attr("src", "data:image/png;base64," + r.result + "");
+            }
+            else
+            {
+                swal("Error", r.ErrorMessage, "warning");
+            }
+            $('#BtnSaveImg-' + ItemName + '-' + ID).addClass('hide');
+            $.busyLoadFull("hide");
+
+        },
+        error: function (jqXHR, exception) {
+            swal("Oops!", "Please, contact your technical support!", "error");
+            $('#BtnSaveImg-' + ItemName + '-' + ID).addClass('hide');
+            $.busyLoadFull("hide");
+        }
+    });
+
+
+
+
+}
+
+function parsleyForm(FormID) {
+
+    $(function () {
+        $('#' + FormID +'').parsley().on('field:validated', function () {
+        })
+            .on('form:submit', function () {
+                return false; // Don't submit form for this demo
+            });
+    });
+}
+
+function parsleyFormWithoutCheck(FormID) {
+    $('#' + FormID + '').parsley().validate();
+}
+
+//function parsleyDivOrForm(ID) {
+//    debugger;
+//    var NoErrors = true;
+//    $('#' + ID + ' :input:not(:button)').each(function (index, value) {//Validate on div
+//    //$('#' + ID + ' *').filter(':input').each(function (index, value) {//Validate on div
+//        try {
+//            if (($(this).is("[data-parsley-type=\"number\"]") || $(this).is("[type=\"number\"]")) && $(this).val() != "")
+//            {
+//                var myElement = cloneAndReplace($(this));
+
+//                myElement.parsley().validate();
+//                if (myElement.parsley().validate() != true)
+//                    NoErrors = false;
+//            }
+//            else
+//            {
+//                $(this).parsley().validate();
+//                if ($(this).parsley().validate() != true)
+//                    NoErrors = false;
+//            }
+           
+//            //Kelany Commented that in 10/12/2023
+//            //$(this).parsley().validate();
+//            //if ($(this).parsley().validate() != true)
+//            //    NoErrors = false;
+//        }
+//        catch (err) {
+
+//        }
+
+//    });
+//    //$('.ss-main.parsley-error > div').css({ "background-color": "#f1c9c9", "border-color": "#ff5f5f !important" });
+//    //$('.ss-main.parsley-error .ss-single-selected').css({ "background-color": "#f1c9c9", "border-color": "#ff5f5f !important" });
+
+//    //$(".parsley-errors-list").remove();
+//    //$('.parsley-required').text("Required");
+//    return NoErrors;
+//}
+
+function parsleyDivOrForm(ID) {
+    debugger;
+    var NoErrors = true;
+    $('#' + ID + ' :input:not(:button)').each(function (index, value) { // Validate on div
+        try {
+            var $input = $(this);
+
+            // Check for number validation (including decimals)
+            if (($input.is("[data-parsley-type=\"number\"]") || $input.is("[type=\"number\"]")) && $input.val() !== "")
+            {
+                var inputValue = $input.val();
+                inputValue = (inputValue.replace(/,/g, ''));
+                // Validate if the input is a valid number or decimal
+                if (!/^[-+]?\d*\.?\d+$/.test(inputValue)) {
+                    // Add a custom Parsley error message
+                    $input.parsley().addError('numberFormat', {
+                        message: "Please enter a valid number."
+                    });
+                    NoErrors = false;
+                } else {
+                    // Remove any existing custom errors if valid
+                    $input.parsley().removeError('numberFormat');
+                }
+            }
+            else
+            {
+                // General Parsley validation
+                $input.parsley().validate();
+                if (!$input.parsley().isValid())
+                {
+                    NoErrors = false;
+                }
+            }
+        } catch (err) {
+            console.error(err); // Log the error for debugging
+        }
+    });
+
+    return NoErrors;
+}
+
+
+function cloneAndReplace(element) {
+    var newElement = element.clone();
+    newElement.val(newElement.val().replace(/,/g, ''));
+    return newElement;
+}
+$("select").change(function () {
+    debugger;
+    $(this).hasClass("parsley-error");
+    if ($(this).val() > 0) {
+        $(this).removeClass("parsley-error");
+        $(this).addClass("parsley-success");
+        $('.ss-main.parsley-error .ss-single-selected').css({ "background-color": "white"});
+
+    }
+});
+function ResetForm(FormID) // Reset form (remove class of error)
+{
+    $('#' + FormID +'').parsley().reset();
+}
+
+function ResetDivOrForm(ID)
+{
+    debugger;
+    $('#' + ID + ' :input:not(:button)').each(function (index, value) {//Validate on div
+        $(this).parsley().reset();
+    });
+    $(".parsley-errors-list").remove()
+}
+
+function ClearModal(ModalID)
+{
+    $('#' + ModalID + '').find("input,textarea,select").val('').end()
+    //$('#' + ModalID + '').find("input[type=checkbox], input[type=checkbox]").prop("checked", "")
+    $('#' + ModalID + '').find("input[type=checkbox], input[type=radio]").prop("checked", "")
+
+}
+function InputMaskNumbers(className) { //This function to all inputs that accept numbers   -- parameter is the class to this input
+    $("." + className +" ").inputmask('decimal', {
+        radixPoint: ".", digits: 3, integerDigits: 13, allowMinus: true,
+        autoGroup: true,
+        groupSeparator: ",",
+        groupSize: 10,
+        skipRadixDance: true
+    });
+}
+function InputMaskNumbersWithDigits(className , _intDigits , _digits) { //This function to all inputs that accept numbers parameters(class of input, length of integers, length fter point)
+
+    if (_digits == null || _digits == "" || _digits == undefined)
+    {
+        $("." + className + " ").inputmask('decimal', {
+            radixPoint: ".", integerDigits: _intDigits, allowMinus: true,
+            autoGroup: true,
+            groupSeparator: ",",
+            groupSize: 10,
+            skipRadixDance: true, showMaskOnHover: true,
+            showMaskOnFocus: true,
+            clearMaskOnLostFocus: false
+        });
+    }
+    else
+    {
+        $("." + className + " ").inputmask('decimal', {
+            radixPoint: ".", digits: _digits, integerDigits: _intDigits, allowMinus: true,
+            autoGroup: true,
+            groupSeparator: ",",
+            groupSize: 10,
+            skipRadixDance: true, showMaskOnHover: true,
+            showMaskOnFocus: true,
+            clearMaskOnLostFocus: false
+        });
+    }
+}
+
+
+function setInputMask(NumberOfDigits)
+{
+    //debugger;
+    InputMaskNumbers("number");
+    InputMaskNumbersWithDigits("digits", 10, NumberOfDigits);
+
+}
+
+function SetInputMaskForm(FormID,NumberOfDigits) {
+    var NumOfDigits = 2;
+    if (NumberOfDigits != undefined && NumberOfDigits != "" && NumberOfDigits != null)
+        NumOfDigits = NumberOfDigits;
+    $('#'+FormID+' :input:not(:button)').filter('[data-parsley-type="number"]').each(function (index, value) {//Validate on div
+
+        $(this).inputmask({
+            alias: 'numeric',
+            radixPoint: '.',
+            groupSeparator: ',',
+            autoGroup: true,
+            digits: NumOfDigits,
+            digitsOptional: false,
+            placeholder: '0'
+        });
+    });
+}
+
+function ClearFields()
+{
+    $('.IsSon select').each(function (i, el) {
+        $(el).find('option').remove();
+
+    });
+    $('.IsSL select').each(function (i, el) {
+        $(el).find("option").eq(0).prop("selected" , true);
+
+    });
+
+    $('.IsTxt input').val("");
+    
+    $('.IsID').val("0");
+    $('.IsMainID').val("0");
+    $('.IsSelectedIDs').find("option").eq(0).prop("selected", true);
+    $('.IsClearedtbl tbody').html("");
+    $('.IsTxt input').val("");
+    $('.IsDate input').val(GetTodayDate(2));
+    $('.IsDateTime input').val(GetTodayDate(1));
+    $('.IsTime input').val(GetTodayDate(3));
+    //$('.IsMainTab1').addClass("active");
+    //$('.IsMainTab2').prop("checked", true);
+}
+
+
+
+function JoinArrayToString(arr) {
+    var str = "";
+    if (typeof arr !== "undefined" && arr != null && arr != "")
+    {
+        str = arr.join(",")
+
+    }
+
+
+    return str
+
+
+}
+
+function SplitStringToArray(str) {
+    var arr = new Array();
+    if (typeof str !== "undefined" && str != null && str != "") {
+        arr = str.split(",")
+
+    }
+
+
+    return arr
+
+
+}
+
+
+
+function ClearFieldsWithoutSelect() {
+    $('.IsSon select').each(function (i, el) {
+        $(el).find('option').remove();
+
+    });
+    //$('.IsSL select').each(function (i, el) {
+    //    $(el).find("option").eq(0).prop("selected", true);
+
+    //});
+
+    $('.IsTxt input').val("");
+
+    $('.IsID').val("0");
+    $('.IsMainID').val("0");
+    //$('.IsSelectedIDs').find("option").eq(0).prop("selected", true);
+    $('.IsClearedtbl tbody').html("");
+    $('.IsTxt input').val("");
+    $('.IsDate input').val(GetTodayDate(2));
+    $('.IsDateTime input').val(GetTodayDate(1));
+    $('.IsTime input').val(GetTodayDate(3));
+    $('.IsMainTab1').addClass("active");
+    $('.IsMainTab2').prop("checked", true);
+}
+var LastChanged = 0;
+function ChangeColor(id)
+{
+    //debugger;
+    //$('#' + LastChanged + ' a').css('color', 'rgb(255, 255, 255)')
+    //$('#' + id + ' a').css('color', '#fdbb30');
+    //LastChanged = id;
+    
+}
+
+//@@@@@@@@@@@@@@@@@@ Files @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+
+function leftPad(value, length) {
+    return ('0'.repeat(length) + value).slice(-length);
+}
+
+function RightPad(value, length) {
+    var s = value + "";
+    while (s.length < length) s = s + "0";
+    return s;
+}
+
+function GetApplicationLink() {
+    return location.protocol + "//" + location.host;
+    //return (window.location.origin)
+}
+
+function OpenLogOutPage()
+{
+   // window.location.replace(window.location.origin);
+    debugger;
+        $.ajax({
+            type: "POST",
+            url: "/Account/LogOff",
+            data: {},
+            //contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+                debugger;
+                if (r.LogOut)
+                    window.location.replace(window.location.origin);
+            }
+});
+}
+
+function OpenNewTab()
+{
+    window.open((location.protocol + "//" + location.host + "/Home/Index"), '_blank');
+}
+//@@@@@@@@@@@@@@@@@ Select @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+
+//@@@@@@@@@@@@@@@@@ Arabic @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2
+
+
+$.fn.reverseChildren = function () {
+    return this.each(function () {
+        var $this = $(this);
+        $this.children().each(function () {
+            $this.prepend(this);
+            $this.addClass('reversed');
+        });
+    });
+   
+};
+function ShowModalSystemPages()
+{
+    if ($("#txtDrawTabs").html() == "")
+        DrawTabs();
+    jQuery('#SystemPages_ModalID').modal('show');
+}
+
+function GetExchangeRate(FromCurrencyID, ToCurrencyID, date, InputToExchangeRate, callback)
+{
+    debugger;
+    if (FromCurrencyID == "" || FromCurrencyID == 0 || FromCurrencyID == "0" || ToCurrencyID == "", date == "")
+        $('#' + InputToExchangeRate + '').val('');
+    else
+        $.ajax({
+            type: 'GET',
+            url: '/General/GetExchangeRate',
+            data: { FromCurrencyID: FromCurrencyID, ToCurrencyID: ToCurrencyID, date: date},
+            dataType: 'json',
+            success: function (result) {
+                if (result.ExchangeRate == null || result.ExchangeRate == undefined) {
+                    //return null;
+                    $('#' + InputToExchangeRate + '').val('');
+                    debugger;
+                    if (typeof (callback) == 'function') {
+                        debugger;
+                        callback();
+                    }
+                    return 0;
+                }
+                else {
+                    $('#' + InputToExchangeRate + '').val(result.ExchangeRate.Amount);
+                    debugger;
+                    if (typeof (callback) == 'function') {
+                        debugger;
+                        callback();
+                    }
+                    //return result.ExchangeRate.Amount;
+                    return (result.ExchangeRate.Amount);
+                }
+                
+            }
+
+        });
+}
+
+//$('.InputListenInto_td_Attribute_Val').keyup(function (event) {
+//    debugger;
+//    // play with event
+//    // use $(this) to determine which element triggers this event
+
+//    //var tr = $(this).closest("tr");
+//    //var Val = $(tr).find('td.').attr('val');
+//    $(this).parents('td').attr('val', ($(this).val()));
+//});
+
+function GetWhereStrToPageSizeAndNumber(pPageSize, pPageNumber)
+{
+    var PageSize = parseInt(pPageSize);
+    var PageNumber = parseInt(pPageNumber);
+    return " OFFSET " + ((PageNumber - 1) * PageSize) + " ROWS FETCH NEXT " + PageSize+" ROWS ONLY ";
+}
+
+function convertToArabicNumbers(_number) {
+    debugger;
+    var number = _number.toString()
+    const arabicDigits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+    let arabicNumber = '';
+    for (let i = 0; i < number.length; i++) {
+        if (/\d/.test(number[i])) {
+            arabicNumber += arabicDigits[number[i]];
+        } else {
+            arabicNumber += number[i];
+        }
+    }
+    return arabicNumber;
+}
+
+function English_Text_Numbers_ToArabicValidateAndOverwrite(ID, event)
+{
+    debugger;
+    if (Language_Ar_En == 1)
+    {
+        var ArabicText = convertToArabicNumbers($("#" + ID + "").val());
+        $("#" + ID + "").val(ArabicText)
+    }
+    //return ArabicText;
+}
+
+
+function DrawTabs()
+{
+    var menu = $("#menu");
+
+    //
+    var TabsText = "";
+    //TabsText  += '<div class="row" style="">'
+    //TabsText  += '    <div class="col-sm-3 o_finance_apps ">'
+    //TabsText  += '        <div class="" style="font-weight: 600;pointer-events: none;cursor: default;margin-bottom: 8px;text-transform: uppercase;color:#017e84;">'
+    //TabsText  += '            <h4>المالية </h4>'
+    //TabsText  += '        </div>'
+    //TabsText  += '        <div class="" style="background-color: #017e84;width: 100%;height: 1px;display: block;font-weight: 600;pointer-events: none;margin-bottom: 8px;color:#017e84;"> </div>'
+    //TabsText  += '        <ul>'
+    //TabsText  += '            <li style="font-size:18px;font-weight:800;"><a href="/ar/app/accounting">المحاسبة </a></li>'
+    //TabsText  += '            <li class="m-t-xs" style="font-size:18px;font-weight:800;"><a href="/ar/app/invoicing">فوترة</a></li>'
+    //TabsText  += '            <li class="m-t-xs" style="font-size:18px;font-weight:800;"><a href="/ar/app/expenses">النفقات</a></li>'
+    //TabsText  += '            <li class="m-t-xs" style="font-size:18px;font-weight:800;"><a href="/ar/app/spreadsheet">جدول البيانات (BI)</a></li>'
+    //TabsText  += '            <li class="m-t-xs" style="font-size:18px;font-weight:800;"><a href="/ar/app/documents">المستندات</a></li>'
+    //TabsText  += '            <li class="m-t-xs" style="font-size:18px;font-weight:800;"><a href="/ar/app/sign">توقيع إلكتروني</a></li>'
+    //TabsText += '        </ul>'
+    //TabsText += '    </div>'
+    //TabsText += '</div>'
+
+    var CountrTabs = 0;
+    menu.children("li").each(function () {
+        debugger;
+
+        // Get the text of the span element inside the current li element
+        var GroupName = $(this).find("a").find("span.Ar_FloatRight").find("span").text();
+        if (!($(this).hasClass("hide")) && GroupName != "") {
+            if (CountrTabs == 0 || CountrTabs % 4 == 0) {
+                TabsText += '<div class="row swapChildrenClass">';
+            }
+            CountrTabs += 1;
+
+            //if (GroupName == "بيانات رئيسية" || GroupName == "شئون مالية" || GroupName == "الحسابات" || GroupName == "النقل") {
+            TabsText += '    <div class="col-sm-3 o_finance_apps ">'
+            TabsText += '        <div class="" style="font-weight: 600;pointer-events: none;cursor: default;margin-bottom: 8px;text-transform: uppercase;color:#017e84;">'
+            TabsText += '            <h4>' + GroupName + ' </h4>'
+            TabsText += '        </div>'
+            TabsText += '        <div class="" style="background-color: #017e84;width: 100%;height: 1px;display: block;font-weight: 600;pointer-events: none;margin-bottom: 8px;color:#017e84;"> </div>'
+
+            var parentText = $(this).find("span").text();//Printtheparenttexttotheconsole 
+            console.log(GroupName);//Selectthenestedulelementinsidethecurrentlielement
+            var nestedUl = $(this).find("ul");
+            // Loop through each li element that is a direct child of nestedUl
+            nestedUl.children("li").each(function () {
+                // Get the text of the a element inside the current li element
+                var childText = $(this).find("a").text();
+                var ViewName = $(this).find("a").attr("onclick").split("'")[1];
+                // Print the child text to the console
+                //TabsText += '            <li class="m-t-xs" style="font-size:18px;font-weight:800;"><a href="/ar/app/invoicing">' + childText + '</a></li>'
+                TabsText += '            <li class="m-t-xs" style="font-size:15px;font-weight:600;"><a onclick="LoadView(\'' + ViewName + '\');" style="cursor: pointer;">' + childText + '</a></li>'
+                //console.log(childText);
+            });
+
+            TabsText += '    </div>'
+
+            if (CountrTabs % 4 == 0) {
+                TabsText += '</div>';
+            }
+        }
+    });
+
+    TabsText += '</div>'
+    $('#txtDrawTabs').html("");
+    $('#txtDrawTabs').html($.parseHTML(TabsText));
+}
+
+function General_FileTasks_OpenEditModal(General_TaskID)
+{
+    debugger;
+    $("#ViewBodyID").load('/Views/SharedHTML', function () {
+    //load('/Views/SharedHTML', function () {
+        $.getScript('/Scripts/CRM/MasterData/CRM_FileTasks.js', function () {
+            FileTasks_OpenEditModal(General_TaskID, "General_");
+        });
+    });
+  
+    
+}
+
+function removeDuplicates(inputStr) {
+    // Split the input string by commas
+    var arr = inputStr.split(',');
+
+    // Use a Set to remove duplicates, as Sets don't allow duplicate values
+    var uniqueArr = [...new Set(arr)];
+
+    // Join the unique elements back into a comma-separated string
+    return uniqueArr.join(',');
+}
+function removeDuplicatesFromList(inputList) {
+    // Use a Set to remove duplicates
+    var uniqueList = [...new Set(inputList)];
+
+    // Return the unique list
+    return uniqueList;
+}
+function checkValueInTable(HtmlTableID, TableRowTd, valueToCheck) {
+    //checkValueInTable("tblContainerReleaseOrder","ContainerNumber","255558252")
+    // Check if any <td> with class 'targetClass' contains the value
+    var exists = false;
+
+    // Traverse all td elements with the specified class
+    $('#' + HtmlTableID + ' td.' + TableRowTd + '').each(function () {
+        if ($(this).text() == valueToCheck) {
+            exists = true;  // If found, set exists to true
+            return false;  // Exit loop after finding the value
+        }
+    });
+
+    return exists;
+}
+function validateContainerNumber(containerNo) {
+    const alphabetValues = {
+        '0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9,
+        'A': 10, 'B': 12, 'C': 13, 'D': 14, 'E': 15, 'F': 16, 'G': 17, 'H': 18, 'I': 19, 'J': 20,
+        'K': 21, 'L': 23, 'M': 24, 'N': 25, 'O': 26, 'P': 27, 'Q': 28, 'R': 29, 'S': 30, 'T': 31,
+        'U': 32, 'V': 34, 'W': 35, 'X': 36, 'Y': 37, 'Z': 38
+    };
+
+    const weights = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512];
+
+    if (!containerNo || containerNo.trim() === "")
+        return { subrc: 1, message: "Container number cannot be empty", checkDigit: -1 };
+
+    containerNo = containerNo.trim().toUpperCase();
+
+    if (containerNo.length !== 11)
+        return { subrc: 2, message: "Container number must be 11 characters", checkDigit: -1 };
+
+    if (!/^[A-Z]{3}[UJZ][0-9]{6}[0-9]$/.test(containerNo))
+        return { subrc: 3, message: "Invalid format. Example: ABCU1234567", checkDigit: -1 };
+
+    let sum = 0;
+    for (let i = 0; i < 10; i++) {
+        let value = alphabetValues[containerNo[i]];
+        sum += value * weights[i];
+    }
+
+    let checkDigit = sum % 11;
+    if (checkDigit === 10) checkDigit = 0;
+
+    let actualCheckDigit = parseInt(containerNo[10]);
+
+    if (checkDigit === actualCheckDigit)
+        return { subrc: 0, message: "", checkDigit };//return { subrc: 0, message: "Container number is valid", checkDigit };
+    else
+        return { subrc: 8, message: "Container number is not valid", checkDigit };
+}
+
+function autoResizeInput(input, MinWidth) {
+
+    debugger;
+
+    let value = input.value;
+
+    let length = value.length || 1; // Avoid empty shrinking
+
+    let calculatedWidth = length * 10; // Adjust width based on length
+
+
+
+    // Set the width to be at least MinWidth
+
+    input.style.width = Math.max(calculatedWidth, MinWidth) + "px";
+
+}
+
+function keepSessionAlive()
+{
+    debugger;
+    //fetch('/api/BasicSystemData/LoadData', { method: 'GET' })
+    //    .then(response => {
+    //        if (!response.ok) {
+    //            throw new Error('Failed to keep session alive');
+    //        }
+    //        return response.json();
+    //    })
+    //    .then(data => console.log('Session kept alive:', data))
+    //    .catch(error => console.error('Error keeping session alive:', error))
+    //    .finally(() => {
+    //        // Call itself after 2 minutes (120,000 ms)
+    //        setTimeout(keepSessionAlive, 12000);
+    //    });
+
+    function loadData()
+    {
+        debugger;
+        $.ajax({
+            type: 'GET',
+            url: '/BasicSystemData/LoadData',
+            data: {},
+            dataType: 'json',
+            timeout: 10000, // Optional: Set a timeout for the request
+            success: function (data) {
+                // Handle successful response
+                console.log('Data loaded successfully:', data);
+
+                // Call the function again after 2.5 minutes
+                setTimeout(loadData, 150000); // 2.5 minutes= 150000 milliseconds
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                // Handle errors, including timeout
+                if (textStatus === 'timeout') {
+                    console.error('Request timed out. Retrying...');
+                } else {
+                    console.error('An error occurred:', textStatus, errorThrown);
+                }
+
+                // Call the function again after 2.5 minutes even if there's an error
+                setTimeout(loadData, 50000); // 2.5 minutes = 150000 milliseconds
+            }
+        });
+    }
+
+    // Initial call to start the loop
+    loadData();
+}
+
+function DisableSelectInHtmlTable(TableId, TdClass)
+{
+    $("#" + TableId + "").find("td." + TdClass + " select").each(function () {
+        $(this).prop("disabled", true); // Disable the <select>
+        // If SlimSelect is initialized, refresh it
+        if (this.slim) {
+            this.slim.disable(); // SlimSelect's disable method
+        }
+    });
+}
+
+function DisableSelect(SelectId)
+{
+    // Select the <select> element initialized with SlimSelect
+    var $select = $("select#" + SelectId + ""); // Replace with your actual selector
+    // Disable the native select element
+    $select.prop("disabled", true);
+    // Disable the SlimSelect UI
+    if ($select[0].slim) {
+        $select[0].slim.disable();
+    }
+}

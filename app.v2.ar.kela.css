@@ -1,0 +1,339 @@
+﻿* {
+    text-align: right;
+}
+/*#menu li ul {
+    right: 100%;
+   
+}*/
+
+    /*#menu li a {
+    position: relative;
+    display: block;
+    padding: 13px 20px;
+    color: #FFFFFF;
+    white-space: nowrap;
+    z-index: 2;
+    font-size: 1.12em;
+    text-align: right;
+    font-family: 'Carrois Gothic', sans-serif;
+}*/
+
+.table tr 
+{
+    text-align: center;
+}
+
+.mostaa-btn-checkall 
+{
+    text-align: right;
+}
+
+th {
+    text-align: center;
+}
+
+/*.header-right
+{
+    float: left;
+    width: 70%;
+}
+
+.header-left 
+{
+    float: right;
+    width: 30%;
+}*/
+
+.profile_details li a i.fa.lnr {
+    position: absolute;
+    top: 34%;
+    /* left: 45%; */
+    color: #68AE00;
+    font-size: 1.6em;
+}
+
+#logo {
+    margin-right: 33%;
+}
+.profile_details_left {
+    /*float: right;
+    width: 35%;*/
+}
+.pull-right
+{
+    float: left !important;
+}
+
+.pull-left
+{
+    float: right !important;
+}
+.ss-list 
+{
+    text-align-last: right;
+}
+
+.SaveLang
+{
+    float: left !important;
+}
+.CloseLang
+{
+    float: left !important;
+}
+/*.col-sm-1 
+{
+    float: right !important;
+}
+.col-sm-2
+{
+    float: right !important;
+}
+.col-sm-3
+{
+    float: right !important;
+}
+.col-sm-4
+{
+    float: right !important;
+}
+.col-sm-5 
+{
+    float: right !important;
+}
+.col-sm-6 
+{
+    float: right !important;
+}
+.col-sm-7 
+{
+    float: right !important;
+}
+.col-sm-8 
+{
+    float: right !important;
+}
+.col-sm-9 
+{
+    float: right !important;
+}
+.col-sm-10 
+{
+    float: right !important;
+}
+.col-sm-11 
+{
+    float: right !important;
+}
+.col-sm-12 
+{
+    float: right !important;
+}*/
+.ChLang {
+    float: right !important;
+}
+.pagination-sm {
+    float: right !important;
+}
+.mostaa-btn-checkall
+{
+    float:right;
+}
+.tblcb 
+{
+    float: right;
+}
+.fa-circle 
+{
+    float: right;
+}
+.fa-check-circle 
+{
+    float: right;
+}
+.bootstrapWizard
+{
+    direction:ltr !important;
+}
+
+/*يعنى لما أحول للغة العربية أوقات فيه حاجات مش بتظبط فى اليمين والشمال وكده هظبها بيها*/
+.floatLeftAr {
+    float: left !important;
+}
+.floatRightAr {
+    float: right !important;
+}
+
+/*In any swal try to center all tags in swalalert*/ 
+.sweet-alert h2 {
+    text-align: center;
+    direction: ltr;
+}
+.sweet-alert p {
+    text-align: center;
+    direction: ltr;
+}
+.sweet-alert div {
+    text-align: center;
+    direction: ltr;
+}
+/*.copyrights p {
+    text-align: center;
+    direction: ltr;
+}*/
+
+.text-left-right_En_Ar {
+    text-align: right;
+}
+.text-left-left_Ar_En {
+    text-align: left;
+}
+.float-right-left_En_Ar {
+    float: left;
+}
+.float-right_Ar___left_En {
+    float: right;
+}
+.float-left_Ar___right_En {
+    float: left;
+}
+
+/*-------------TREE START-----------------*/
+.section {
+    padding-left: 1px !important;
+    padding-right: 30px !important;
+}
+.section label:after {
+    content: "\0002B";
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: unset;
+    padding: 10px;
+    text-align: center;
+    font-size: 30px;
+    color: #f00;
+    transition: all 0.5s;
+    order: 1;
+}
+.section label{margin-right:5px;}
+/*-------------TREE END-----------------*/
+
+.padding_Right_50_En_Ar{
+    padding-right:50px;
+}
+/*.tree li ul {*/ /*Kelany*/
+    /*padding-left: 30px;
+}*/
+
+
+    /*نوع الخط بداية*/
+body {
+    font-family: inherit;
+    /*font-weight:bold;*/
+}
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: inherit;
+    font-weight: bold;
+}
+label{
+    font-weight:bold !important;
+}
+.ss-main .ss-single-selected {
+    padding-bottom: 0px;
+    padding-top: 0px;
+    padding-right: 6px;
+    padding-left: 6px;
+}
+    /*نوع الخط نهاية*/
+
+/*  رسم الدائرة فى الصفحة الرئيسية  بداية*/
+.pie {
+    position: relative;
+    margin: 1em auto;
+    border: 4px solid black;
+    padding: 0;
+    width: 15em;
+    height: 15em;
+    border-radius: 50%;
+    list-style: none;
+    overflow: hidden;
+}
+
+.slice {
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 50%;
+    transform-origin: 0% 100%;
+    border: 2px solid black;
+    box-sizing: border-box;
+}
+
+.slice-contents {
+    position: absolute;
+    left: -100%;
+    width: 200%;
+    height: 200%;
+    border-radius: 50%;
+}
+
+.slice:nth-child(1) {
+    transform: rotate(-60deg) skewY(30deg) scale(1.2);
+}
+
+    .slice:nth-child(1) .slice-contents {
+        transform: skewY(-30deg); /* unskew slice contents */
+        background: lightblue;
+    }
+
+.slice:nth-child(2) {
+    transform: rotate(60deg) skewY(30deg) scale(1.2);
+}
+
+    .slice:nth-child(2) .slice-contents {
+        transform: skewY(-30deg); /* unskew slice contents */
+        background: lightgreen;
+    }
+
+.slice:nth-child(3) {
+    transform: rotate(180deg) skewY(30deg) scale(1.2);
+}
+
+    .slice:nth-child(3) .slice-contents {
+        transform: skewY(-30deg); /* unskew slice contents */
+        background: orange;
+    }
+
+.inner-pie {
+    position: absolute;
+    width: 3em;
+    height: 3em;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 4px solid black;
+    background: white;
+}
+/*  رسم الدائرة فى الصفحة الرئيسية  نهاية*/
+
+.table thead tr {
+    background-color: #ffef98;
+}
+
+.input-group .form-control:last-child, .input-group-addon:last-child, .input-group-btn:last-child > .btn, .input-group-btn:last-child > .dropdown-toggle, .input-group-btn:first-child > .btn:not(:first-child) {
+    border-bottom-right-radius: 0;
+    border-top-right-radius:0;
+}
+
+.bootstrap-datetimepicker-widget {
+    direction: ltr !important;
+    text-align:center;
+}
+.dropdown-menu {
+    direction: ltr !important;
+    text-align: center;
+}
